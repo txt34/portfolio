@@ -1,0 +1,40 @@
+{
+    "toolkitVersion":  "4.2.0",
+    "projectName":  "testingWebApp",
+    "projectType":  "Full-stack website",
+    "frontend":  "",
+    "backend":  "",
+    "layout":  "",
+    "pages":  [
+
+              ],
+    "components":  [
+
+                   ],
+    "modules":  [
+
+                ],
+    "api":  [
+
+            ],
+    "architecture":  [
+
+                     ],
+    "designPatterns":  [
+
+                       ],
+    "classStructure":  [
+
+                       ],
+    "securityClasses":  [
+
+                        ],
+    "owasp":  [
+
+              ],
+    "accessibility":  [
+
+                      ],
+    "deployment":  "",
+    "generatedAt":  "2026-09-14T11:50:19.8536904-07:00"
+}

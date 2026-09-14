@@ -1,0 +1,103 @@
+{
+    "toolkitVersion":  "4.2.0",
+    "projectName":  "testingWebApp",
+    "projectType":  "Full-stack website",
+    "frontend":  "HTML5 + CSS + TypeScript",
+    "backend":  "Node.js",
+    "layout":  "Custom",
+    "pages":  [
+
+              ],
+    "components":  [
+                       "7"
+                   ],
+    "modules":  [
+                    "HTML5 + CSS + TypeScript",
+                    "Application shell",
+                    "Frontend security helpers",
+                    "Filled Application Shell",
+                    "Filled API Client",
+                    "Filled Theme",
+                    "API Hook: hook1",
+                    "ALL implementation extensions"
+                ],
+    "api":  [
+                "Frontend API client",
+                "Backend: Node.js",
+                "Backend Security: Request Validation",
+                "Backend Security: Authentication",
+                "Backend Security: Authorization",
+                "Backend Security: CSRF Protection",
+                "Backend Security: Security Headers",
+                "Backend Security: Rate Limiting",
+                "Backend Security: Audit Logging",
+                "Backend Security: Secure Error Handling",
+                "Backend Security: Parameterized Data Access",
+                "Backend Security: Secret Management",
+                "Backend Security: Broken Access Control",
+                "Backend Security: Cryptographic Failures",
+                "Backend Security: Injection",
+                "Backend Security: Insecure Design",
+                "Backend Security: Security Misconfiguration",
+                "Backend Security: Vulnerable and Outdated Components",
+                "Backend Security: Identification and Authentication Failures",
+                "Backend Security: Software and Data Integrity Failures",
+                "Backend Security: Security Logging and Monitoring Failures",
+                "Backend Security: Server-Side Request Forgery"
+            ],
+    "architecture":  [
+                         "Website structure: Full Stack website"
+                     ],
+    "designPatterns":  [
+                           "Factory Method"
+                       ],
+    "classStructure":  [
+                           "InputValidator",
+                           "AuthorizationService",
+                           "AuthenticationService",
+                           "SessionManager",
+                           "CsrfProtection",
+                           "SecurityHeaders",
+                           "RateLimiter",
+                           "AuditLogger",
+                           "SecureApiClient",
+                           "AccessPolicy",
+                           "OutputEncoder",
+                           "SecretProvider",
+                           "RequestValidator",
+                           "ErrorHandler"
+                       ],
+    "securityClasses":  [
+                            "InputValidator",
+                            "AuthorizationService",
+                            "AuthenticationService",
+                            "SessionManager",
+                            "CsrfProtection",
+                            "SecurityHeaders",
+                            "RateLimiter",
+                            "AuditLogger",
+                            "SecureApiClient",
+                            "AccessPolicy",
+                            "OutputEncoder",
+                            "SecretProvider",
+                            "RequestValidator",
+                            "ErrorHandler"
+                        ],
+    "owasp":  [
+                  "1 - Broken Access Control",
+                  "2 - Cryptographic Failures",
+                  "3 - Injection",
+                  "4 - Insecure Design",
+                  "5 - Security Misconfiguration",
+                  "6 - Vulnerable and Outdated Components",
+                  "7 - Identification and Authentication Failures",
+                  "8 - Software and Data Integrity Failures",
+                  "9 - Security Logging and Monitoring Failures",
+                  "10 - Server-Side Request Forgery"
+              ],
+    "accessibility":  [
+
+                      ],
+    "deployment":  "",
+    "generatedAt":  "2026-09-14T11:53:38.6668733-07:00"
+}

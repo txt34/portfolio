@@ -1,0 +1,66 @@
+{
+    "toolkitVersion":  "4.2.0",
+    "projectName":  "testingWebApp",
+    "projectType":  "Full-stack website",
+    "frontend":  "HTML5 + CSS + TypeScript",
+    "backend":  "",
+    "layout":  "",
+    "pages":  [
+
+              ],
+    "components":  [
+
+                   ],
+    "modules":  [
+                    "HTML5 + CSS + TypeScript"
+                ],
+    "api":  [
+
+            ],
+    "architecture":  [
+                         "Website structure: Full Stack website"
+                     ],
+    "designPatterns":  [
+                           "Factory Method"
+                       ],
+    "classStructure":  [
+                           "InputValidator",
+                           "AuthorizationService",
+                           "AuthenticationService",
+                           "SessionManager",
+                           "CsrfProtection",
+                           "SecurityHeaders",
+                           "RateLimiter",
+                           "AuditLogger",
+                           "SecureApiClient",
+                           "AccessPolicy",
+                           "OutputEncoder",
+                           "SecretProvider",
+                           "RequestValidator",
+                           "ErrorHandler"
+                       ],
+    "securityClasses":  [
+                            "InputValidator",
+                            "AuthorizationService",
+                            "AuthenticationService",
+                            "SessionManager",
+                            "CsrfProtection",
+                            "SecurityHeaders",
+                            "RateLimiter",
+                            "AuditLogger",
+                            "SecureApiClient",
+                            "AccessPolicy",
+                            "OutputEncoder",
+                            "SecretProvider",
+                            "RequestValidator",
+                            "ErrorHandler"
+                        ],
+    "owasp":  [
+
+              ],
+    "accessibility":  [
+
+                      ],
+    "deployment":  "",
+    "generatedAt":  "2026-09-14T11:50:56.3508987-07:00"
+}

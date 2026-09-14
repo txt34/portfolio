@@ -1,0 +1,29 @@
+<!--
+SECURE WEBSITE DESIGN TEMPLATE
+Generated from the selected security responsibilities.
+
+This template intentionally keeps authorization and sensitive validation
+server-side. Frontend controls are integration points, not trust boundaries.
+-->
+<section class="secure-page-template"
+         data-security-enabled="true"
+         aria-labelledby="page-title">
+
+    <header class="page-header">
+        <h1 id="page-title">{{PAGE_TITLE}}</h1>
+    </header>
+
+    <main class="page-content">
+        {{PAGE_CONTENT}}
+    </main>
+
+    <footer class="page-footer">
+        {{PAGE_FOOTER}}
+    </footer>
+
+</section>
+
+<!--
+Selected security responsibilities:
+InputValidator, AuthorizationService, AuthenticationService, SessionManager, CsrfProtection, SecurityHeaders, RateLimiter, AuditLogger, SecureApiClient, AccessPolicy, OutputEncoder, SecretProvider, RequestValidator, ErrorHandler
+-->

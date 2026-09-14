@@ -1,0 +1,84 @@
+{
+    "toolkitVersion":  "4.2.0",
+    "projectName":  "testingWebApp",
+    "projectType":  "Full-stack website",
+    "frontend":  "HTML5 + CSS + TypeScript",
+    "backend":  "Node.js",
+    "layout":  "Custom",
+    "pages":  [
+
+              ],
+    "components":  [
+                       "7"
+                   ],
+    "modules":  [
+                    "HTML5 + CSS + TypeScript",
+                    "Application shell",
+                    "Frontend security helpers",
+                    "Filled Application Shell",
+                    "Filled API Client",
+                    "Filled Theme",
+                    "API Hook: hook1",
+                    "ALL implementation extensions"
+                ],
+    "api":  [
+                "Frontend API client",
+                "Backend: Node.js",
+                "Backend Security: Request Validation",
+                "Backend Security: Authentication",
+                "Backend Security: Authorization",
+                "Backend Security: CSRF Protection",
+                "Backend Security: Security Headers",
+                "Backend Security: Rate Limiting",
+                "Backend Security: Audit Logging",
+                "Backend Security: Secure Error Handling",
+                "Backend Security: Parameterized Data Access",
+                "Backend Security: Secret Management"
+            ],
+    "architecture":  [
+                         "Website structure: Full Stack website"
+                     ],
+    "designPatterns":  [
+                           "Factory Method"
+                       ],
+    "classStructure":  [
+                           "InputValidator",
+                           "AuthorizationService",
+                           "AuthenticationService",
+                           "SessionManager",
+                           "CsrfProtection",
+                           "SecurityHeaders",
+                           "RateLimiter",
+                           "AuditLogger",
+                           "SecureApiClient",
+                           "AccessPolicy",
+                           "OutputEncoder",
+                           "SecretProvider",
+                           "RequestValidator",
+                           "ErrorHandler"
+                       ],
+    "securityClasses":  [
+                            "InputValidator",
+                            "AuthorizationService",
+                            "AuthenticationService",
+                            "SessionManager",
+                            "CsrfProtection",
+                            "SecurityHeaders",
+                            "RateLimiter",
+                            "AuditLogger",
+                            "SecureApiClient",
+                            "AccessPolicy",
+                            "OutputEncoder",
+                            "SecretProvider",
+                            "RequestValidator",
+                            "ErrorHandler"
+                        ],
+    "owasp":  [
+
+              ],
+    "accessibility":  [
+
+                      ],
+    "deployment":  "",
+    "generatedAt":  "2026-09-14T11:53:23.9601138-07:00"
+}

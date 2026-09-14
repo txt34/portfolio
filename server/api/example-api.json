@@ -1,0 +1,28 @@
+{
+    "method":  "GET",
+    "securityPipeline":  [
+                             "request-validation",
+                             "authentication",
+                             "authorization",
+                             "rate-limiting",
+                             "parameterized-data-access",
+                             "audit-logging",
+                             "safe-error-response"
+                         ],
+    "name":  "example-api",
+    "parameters":  {
+                       "query":  [
+
+                                 ],
+                       "path":  [
+
+                                ],
+                       "body":  [
+
+                                ],
+                       "headers":  [
+
+                                   ]
+                   },
+    "route":  "/api/example"
+}

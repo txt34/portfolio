@@ -1,0 +1,68 @@
+{
+    "toolkitVersion":  "4.2.0",
+    "projectName":  "testingWebApp",
+    "projectType":  "Full-stack website",
+    "frontend":  "HTML5 + CSS + TypeScript",
+    "backend":  "",
+    "layout":  "Custom",
+    "pages":  [
+
+              ],
+    "components":  [
+                       "7"
+                   ],
+    "modules":  [
+                    "HTML5 + CSS + TypeScript",
+                    "Application shell",
+                    "Frontend security helpers"
+                ],
+    "api":  [
+                "Frontend API client"
+            ],
+    "architecture":  [
+                         "Website structure: Full Stack website"
+                     ],
+    "designPatterns":  [
+                           "Factory Method"
+                       ],
+    "classStructure":  [
+                           "InputValidator",
+                           "AuthorizationService",
+                           "AuthenticationService",
+                           "SessionManager",
+                           "CsrfProtection",
+                           "SecurityHeaders",
+                           "RateLimiter",
+                           "AuditLogger",
+                           "SecureApiClient",
+                           "AccessPolicy",
+                           "OutputEncoder",
+                           "SecretProvider",
+                           "RequestValidator",
+                           "ErrorHandler"
+                       ],
+    "securityClasses":  [
+                            "InputValidator",
+                            "AuthorizationService",
+                            "AuthenticationService",
+                            "SessionManager",
+                            "CsrfProtection",
+                            "SecurityHeaders",
+                            "RateLimiter",
+                            "AuditLogger",
+                            "SecureApiClient",
+                            "AccessPolicy",
+                            "OutputEncoder",
+                            "SecretProvider",
+                            "RequestValidator",
+                            "ErrorHandler"
+                        ],
+    "owasp":  [
+
+              ],
+    "accessibility":  [
+
+                      ],
+    "deployment":  "",
+    "generatedAt":  "2026-09-14T11:51:38.9705619-07:00"
+}

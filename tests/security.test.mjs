@@ -30,7 +30,7 @@ const startServer = async () => {
     let output = '';
     const onData = (chunk) => {
       output += chunk.toString();
-      if (output.includes(`port ${port}`)) {
+      if (output.includes(`"port":${port}`)) {
         child.stdout.off('data', onData);
         resolve();
       }
@@ -57,6 +57,12 @@ test('production security boundaries hold at the HTTP API', async (t) => {
   const health = await fetch(`http://127.0.0.1:${port}/healthz`);
   assert.equal(health.status, 200);
   assert.deepEqual((await health.json()).status, 'ok');
+
+  const statusPolls = await Promise.all(Array.from({ length: 55 }, () => Promise.all([
+    fetch(`http://127.0.0.1:${port}/healthz`),
+    fetch(`http://127.0.0.1:${port}/api/security-status`)
+  ])));
+  assert.equal(statusPolls.flat().every((response) => response.status === 200), true);
 
   const catalog = await fetch(`http://127.0.0.1:${port}/api/products?category=Home`);
   assert.equal(catalog.status, 200);
@@ -96,5 +102,5 @@ test('production security boundaries hold at the HTTP API', async (t) => {
   assert.equal(invalidExample.status, 400);
 
   const untrustedPipe = await fetch(`http://127.0.0.1:${port}/api/data-pipe`, { method: 'POST', body: 'data' });
-  assert.equal(untrustedPipe.status, 401);
+  assert.equal(untrustedPipe.status, 403);
 });

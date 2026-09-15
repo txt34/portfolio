@@ -10,6 +10,7 @@
   <script type="module" src="/assets/js/catalog.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <div class="opening-sequence" role="status" aria-live="polite"><span class="opening-kicker">COMMON GROUND / 001</span><strong>Good things,<br><em>well found.</em></strong><span class="opening-line"></span><span class="opening-status">Preparing your catalog <span class="opening-loader" aria-hidden="true"></span></span></div>
   <header class="site-header">
     <a class="brand" href="/" aria-label="Common Ground home" data-tooltip="Return to the Common Ground home page"><span class="brand-mark">cg</span><span>common ground</span></a>
@@ -22,7 +23,7 @@
     <div class="header-actions"><button class="saved-button" type="button" data-saved-toggle aria-label="Show saved products" data-tooltip="Your saved products stay in this browser"><span aria-hidden="true">♡</span><span data-saved-count>0</span></button></div>
   </header>
 
-  <main>
+  <main id="main-content">
     <section class="hero" id="discover">
       <div class="hero-copy">
         <p class="eyebrow">The considered catalog</p>
@@ -43,7 +44,7 @@
       <div class="section-heading">
         <div><p class="eyebrow">Browse the edit</p><h2 id="collection-title">Find your next favorite.</h2></div>
       </div>
-      <div class="filter-row" data-categories aria-label="Filter by category"></div>
+      <div class="filter-row" data-categories role="group" aria-label="Filter by category"></div>
       <div class="product-grid" data-product-grid aria-live="polite"></div>
       <p class="empty-state" data-empty hidden>No products match that search. Try another angle.</p>
     </section>
@@ -58,7 +59,7 @@
     <section class="cursor-console" aria-labelledby="cursor-console-title">
       <div class="cursor-console-heading"><p class="eyebrow">Local interaction log</p><h2 id="cursor-console-title">Your cursor, working quietly.</h2><p>We use interaction locally to keep the interface responsive. No cursor coordinates or movement history are sent to the server.</p></div>
       <div class="cursor-console-live" role="status" aria-live="polite"><span class="cursor-pulse" data-cursor-pulse aria-hidden="true"></span><span class="cursor-tracker" data-cursor-tracker aria-hidden="true"></span><span class="cursor-float-feed" data-cursor-float-feed aria-hidden="true">local / live</span><strong data-cursor-state>Waiting for movement</strong><span data-cursor-benefit>Move through the catalog to see useful controls respond.</span><button class="cursor-log-clear" type="button" data-cursor-clear data-tooltip="Delete the local interaction log now">Clear local log</button></div>
-      <div class="cursor-log" aria-label="Recent local interaction benefits" data-cursor-log></div>
+      <div class="cursor-log" role="log" aria-live="polite" aria-label="Recent local interaction benefits" data-cursor-log></div>
     </section>
   </main>
 

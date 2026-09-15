@@ -90,6 +90,8 @@ app.use((req, res, next) => {
     res.on('finish', () => {
         if (res.statusCode >= 400)
             failedRequests += 1;
+        if (req.path === '/api/security-status')
+            return;
         const diagnosticEvent = {
             requestId,
             timestamp: new Date().toISOString(),
@@ -115,7 +117,7 @@ app.use(helmet({
             fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
             formAction: ["'self'"],
             frameAncestors: ["'none'"],
-            imgSrc: ["'self'", 'data:'],
+            imgSrc: ["'self'", 'data:', 'https://images.unsplash.com'],
             objectSrc: ["'none'"],
             scriptSrc: ["'self'", 'https://unpkg.com'],
             styleSrc: ["'self'", 'https://fonts.googleapis.com']
@@ -125,6 +127,9 @@ app.use(helmet({
 app.use(rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 100,
+    skip: (req) => req.path === '/healthz'
+        || req.path === '/api/security-status'
+        || req.path.startsWith('/assets/'),
     standardHeaders: 'draft-7',
     legacyHeaders: false,
     message: { error: 'Too many requests. Try again later.' }
@@ -164,7 +169,14 @@ app.get('/healthz', (_req, res) => {
         serverTime: new Date().toISOString()
     });
 });
-app.get('/api/security-status', (_req, res) => {
+const securityStatusLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 120,
+    standardHeaders: 'draft-7',
+    legacyHeaders: false,
+    message: { error: 'Too many status requests. Try again later.' }
+});
+app.get('/api/security-status', securityStatusLimiter, (_req, res) => {
     res.set('Cache-Control', 'no-store');
     res.json({
         serverTime: new Date().toISOString(),

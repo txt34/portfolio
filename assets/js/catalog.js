@@ -36,6 +36,7 @@ let dialogProduct;
 let catalogRequestController;
 let cursorFrame;
 let lastCursorZone = '';
+let catalogReadinessReported = false;
 const cursorBenefits = {
   header: 'Navigation stays close so you can move between sections quickly.',
   protection: 'Protection details remain visible while you browse.',
@@ -265,6 +266,10 @@ const loadProducts = async () => {
     if (error.name !== 'AbortError') productGrid.replaceChildren(makeElement('p', 'empty-state', 'The collection is taking a moment to load.'));
   } finally {
     window.clearTimeout(timeout);
+    if (!catalogReadinessReported) {
+      catalogReadinessReported = true;
+      window.dispatchEvent(new CustomEvent('catalog:ready'));
+    }
   }
 };
 

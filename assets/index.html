@@ -7,11 +7,18 @@
   <title>Common Ground / Product discovery</title>
   <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="/assets/css/catalog.css">
+  <script type="module" src="/assets/js/loading-sequence.js" defer></script>
   <script type="module" src="/assets/js/catalog.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <div class="opening-sequence" role="status" aria-live="polite"><span class="opening-kicker">COMMON GROUND / 001</span><strong>Good things,<br><em>well found.</em></strong><span class="opening-line"></span><span class="opening-status">Preparing your catalog <span class="opening-loader" aria-hidden="true"></span></span></div>
+  <div class="opening-sequence" role="status" aria-live="polite" aria-label="Preparing Common Ground">
+    <span class="opening-kicker">COMMON GROUND / 001</span>
+    <strong>Good things,<br><em>well found.</em></strong>
+    <span class="opening-line" aria-hidden="true"></span>
+    <span class="opening-status"><span data-loading-message>Creating a calm beginning</span><span class="opening-step" data-loading-step>01 / 03</span></span>
+    <span class="opening-progress" aria-hidden="true"><span data-loading-progress></span></span>
+  </div>
   <header class="site-header">
     <a class="brand" href="/" aria-label="Common Ground home" data-tooltip="Return to the Common Ground home page"><span class="brand-mark">cg</span><span>common ground</span></a>
     <nav class="primary-nav" aria-label="Primary navigation">

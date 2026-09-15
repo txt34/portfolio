@@ -5,5 +5,22 @@
 // validation orchestration, and consistent error translation.
 // Never use hooks to bypass authorization or expose secrets.
 export async function requestSecurityHook(context: unknown): Promise<unknown> {
-    return context;
+    if (!context || typeof context !== "object" || Array.isArray(context)) {
+        return context;
+    }
+
+    const blockedKeys = new Set([
+        "authorization",
+        "cookie",
+        "password",
+        "passwordHash",
+        "secret",
+        "session",
+        "token",
+        "body"
+    ]);
+
+    return Object.fromEntries(
+        Object.entries(context).filter(([key]) => !blockedKeys.has(key.toLowerCase()))
+    );
 }

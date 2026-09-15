@@ -7,11 +7,20 @@
 # See https://docs.gitlab.com/ci/variables/#cicd-variable-precedence
 stages:
 - test
+- dependency-scanning
 - secret-detection
 sast:
   stage: test
+build_and_test:
+  stage: test
+  image: node:20
+  script:
+  - npm ci --ignore-scripts
+  - npm run build
+  - npm test
 include:
 - template: Security/SAST.gitlab-ci.yml
+- template: Security/Dependency-Scanning.gitlab-ci.yml
 - template: Security/Secret-Detection.gitlab-ci.yml
 variables:
   SECRET_DETECTION_ENABLED: 'true'

@@ -7,7 +7,8 @@
     "dev": "tsx src/server.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
-    "test": "node --test tests/app-smoke.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "audit": "npm audit --audit-level=high"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

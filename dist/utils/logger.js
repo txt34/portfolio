@@ -1,6 +1,12 @@
 const formatMessage = (level, message, meta) => {
     const base = `[${new Date().toISOString()}] ${level.toUpperCase()} ${message}`;
-    return meta === undefined ? base : `${base} ${JSON.stringify(meta)}`;
+    if (meta === undefined) {
+        return base;
+    }
+    if (meta instanceof Error) {
+        return `${base} ${JSON.stringify({ name: meta.name, message: meta.message, stack: meta.stack })}`;
+    }
+    return `${base} ${JSON.stringify(meta)}`;
 };
 const logger = {
     info: (message, meta) => console.log(formatMessage('info', message, meta)),

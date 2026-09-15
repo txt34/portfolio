@@ -1,14 +1,15 @@
 # Application Build
 
-This project is a local Node.js + Express application that demonstrates secure transport, session-based CSRF protection, rate limiting, validation, and protected API behavior. It is intended to run on a developer machine without external infrastructure.
+Common Ground is a full-stack product discovery experience: a calm, searchable catalog for finding well-made products across home, workspaces, tech, outdoors, and wear. It is powered by a Node.js + Express API and includes a production-oriented security baseline: secure transport, hardened sessions, CSRF protection, rate limiting, strict validation, bcrypt-backed authentication, bounded streaming, safe errors, and protected metrics.
 
 ## What the application does
 
+- Serves a responsive product discovery experience with search, categories, saved items, and product detail views
 - Starts an Express API on HTTPS and redirects HTTP traffic to HTTPS
-- Exposes example and protected routes for demonstration and testing
+- Exposes catalog, example, and protected routes for demonstration and testing
 - Uses Helmet, CSRF middleware, session cookies, and input validation
-- Tracks request metrics and exposes them on the `/metrics` endpoint
-- Provides mock authentication and authorization flows for local demos
+- Tracks request metrics and exposes them on `/metrics` only with a bearer token
+- Uses environment-backed authentication and centralized authorization
 
 ## Prerequisites
 
@@ -26,10 +27,10 @@ npm run dev
 
 Then open:
 
-- http://localhost:3000
+- http://localhost:8080
 - https://localhost:3443
 
-The app uses a self-signed certificate stored in the `certificates` folder for local HTTPS testing. If the certificate files are missing, the server generates them automatically during startup. If the default local ports are already in use, the app automatically picks the next available ones for you.
+The app uses a self-signed certificate stored in the `certificates` folder for local HTTPS testing. If the certificate files are missing, the server generates them automatically in development. Production requires managed TLS certificate files and fails closed when they are missing.
 
 ## Useful commands
 
@@ -42,29 +43,48 @@ npm start
 ## Example requests
 
 - `GET /` — welcome response
+- `GET /healthz` — minimal public health response with no internal counters
 - `GET /api/csrf-token` — CSRF token for browser clients
 - `GET /api/example?name=Alice` — validation example
 - `GET /api/protected` — requires basic auth
-- `GET /api/admin` — requires basic auth for an admin user
-- `GET /metrics` — Prometheus metrics
+- `GET /api/diagnostics` — authenticated operational feed with uptime, request counts, active connections, and bounded recent events
+- `GET /api/diagnostics/feed` — authenticated live Server-Sent Events maintenance feed; capped and heartbeat-protected
+- `GET /metrics` — Prometheus metrics; requires `Authorization: Bearer $METRICS_TOKEN`
 
-## Mock credentials
+## Authentication configuration
 
-Use these values for the protected endpoints while testing locally:
+Protected endpoints do not contain default passwords. Generate bcrypt hashes and provide them through environment variables:
 
-- Username: `user` / Password: `password`
-- Username: `admin` / Password: `password`
+```bash
+node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 12))" 'use-a-local-password'
+```
+
+Set the resulting value as `USER_PASSWORD_HASH` for the protected API.
 
 ## Environment configuration
 
 Create a `.env` file if you want to override defaults:
 
 ```bash
-SESSION_SECRET=change-this-for-local-development
-PORT=3000
+SESSION_SECRET=replace-with-at-least-32-random-characters
+USER_USERNAME=user
+USER_PASSWORD_HASH=replace-with-bcrypt-hash
+METRICS_TOKEN=replace-with-a-long-random-token
+MAX_REQUEST_BYTES=100000
+MAX_DIAGNOSTIC_SUBSCRIBERS=10
+DATA_DIR=./data
+PORT=8080
 HTTPS_PORT=3443
+PUBLIC_ORIGIN=https://localhost:3443
+NODE_ENV=development
 ```
 
 ## Notes
 
-This is a local sample application, not a full production identity system. For real deployments, replace the mock auth flow with a managed identity provider and a valid certificate management process.
+For production, use a managed identity provider or a durable user store, a persistent session store instead of the default in-memory store, managed TLS, centralized secrets, dependency scanning, and a process manager or container platform. The application intentionally fails closed when `SESSION_SECRET` or production TLS configuration is missing.
+
+For multi-instance or industrial deployment, add a Redis-backed session and rate-limit store through `REDIS_URL`, place replicas behind a load balancer, serve product media through object storage/CDN, and route logs and metrics to centralized observability. The application now reports readiness through `/healthz` and drains active HTTP connections and diagnostic subscribers during shutdown.
+
+The catalog API uses short-lived cache headers and the browser cancels stale searches. Production should place a CDN or shared cache in front of `/assets` and `/api/products`; the current in-process catalog is optimized for the prototype but is not a replacement for a database-backed product index at large scale.
+
+Anti-cloning protections are intentionally transparent: API responses are marked `noindex`, crawler guidance excludes operational endpoints, catalog requests have a dedicated abuse limit, and ownership is stated in the site footer. Browser-delivered assets remain inspectable by design; proprietary business rules must stay server-side.

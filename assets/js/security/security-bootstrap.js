@@ -9,6 +9,6 @@ import * as outputencoder from './outputencoder.js';
 import * as errorhandler from './errorhandler.js';
 
 export const securityDesign = {
-    enabled: True,
+    enabled: true,
     responsibilities: ["InputValidator", "AuthorizationService", "AuthenticationService", "SessionManager", "CsrfProtection", "SecurityHeaders", "RateLimiter", "AuditLogger", "SecureApiClient", "AccessPolicy", "OutputEncoder", "SecretProvider", "RequestValidator", "ErrorHandler"]
 };

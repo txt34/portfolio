@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A considered collection of products worth bringing into your everyday.">
+  <title>Common Ground / Product discovery</title>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="/assets/css/catalog.css">
+  <script type="module" src="/assets/js/catalog.js" defer></script>
+</head>
+<body>
+  <div class="opening-sequence" role="status" aria-live="polite"><span class="opening-kicker">COMMON GROUND / 001</span><strong>Good things,<br><em>well found.</em></strong><span class="opening-line"></span><span class="opening-status">Preparing your catalog <span class="opening-loader" aria-hidden="true"></span></span></div>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Common Ground home" data-tooltip="Return to the Common Ground home page"><span class="brand-mark">cg</span><span>common ground</span></a>
+    <label class="header-search" data-tooltip="Search by product, maker, or category. Typed text is not logged."><span class="sr-only">Search products</span><span aria-hidden="true">⌕</span><input data-search type="search" placeholder="Search" autocomplete="off" spellcheck="false"></label>
+    <nav class="primary-nav" aria-label="Primary navigation">
+      <a class="active" href="#discover" data-tooltip="Jump to the introduction">Discover</a>
+      <a href="#collections" data-tooltip="Browse products and categories">Collections</a>
+      <a href="#about" data-tooltip="Read why this catalog exists">About</a>
+    </nav>
+    <div class="header-actions"><button class="saved-button" type="button" data-saved-toggle aria-label="Show saved products" data-tooltip="Your saved products stay in this browser"><span aria-hidden="true">♡</span><span data-saved-count>0</span></button></div>
+  </header>
+
+  <main>
+    <section class="hero" id="discover">
+      <div class="hero-copy">
+        <p class="eyebrow">The considered catalog</p>
+        <h1>Good things,<br><em>well found.</em></h1>
+        <p class="hero-text">A quieter way to discover products made with purpose, selected for how they live with you.</p>
+        <a class="text-link" href="#collections" data-tooltip="Move to the product collection">Explore the collection <span aria-hidden="true">↘</span></a>
+      </div>
+      <div class="hero-art" aria-label="A curated selection of everyday objects" role="img">
+        <div class="hero-card hero-card-back"></div>
+        <div class="hero-card hero-card-front"><span>OBJECT<br>NO. 024</span><strong>Made for<br>the daily.</strong></div>
+        <span class="hero-note">01 / 06</span>
+      </div>
+    </section>
+
+    <section class="protection-feed" id="protection-app" aria-labelledby="protection-title"><p class="eyebrow">Live by design</p><h2 id="protection-title">Protection is on.</h2></section>
+
+    <section class="catalog-section" id="collections" aria-labelledby="collection-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Browse the edit</p><h2 id="collection-title">Find your next favorite.</h2></div>
+      </div>
+      <div class="filter-row" data-categories aria-label="Filter by category"></div>
+      <div class="product-grid" data-product-grid aria-live="polite"></div>
+      <p class="empty-state" data-empty hidden>No products match that search. Try another angle.</p>
+    </section>
+
+    <section class="manifesto" id="about">
+      <p class="eyebrow">Why Common Ground</p>
+      <p class="manifesto-copy">Less noise. Better objects.<br><em>A little more intention.</em></p>
+      <span class="manifesto-rule" aria-hidden="true"></span>
+      <p class="manifesto-detail">We look for the useful, the durable, and the quietly beautiful. The things you reach for every day, and keep reaching for.</p>
+    </section>
+
+    <section class="cursor-console" aria-labelledby="cursor-console-title">
+      <div class="cursor-console-heading"><p class="eyebrow">Local interaction log</p><h2 id="cursor-console-title">Your cursor, working quietly.</h2><p>We use interaction locally to keep the interface responsive. No cursor coordinates or movement history are sent to the server.</p></div>
+      <div class="cursor-console-live" role="status" aria-live="polite"><span class="cursor-pulse" data-cursor-pulse aria-hidden="true"></span><span class="cursor-tracker" data-cursor-tracker aria-hidden="true"></span><span class="cursor-float-feed" data-cursor-float-feed aria-hidden="true">local / live</span><strong data-cursor-state>Waiting for movement</strong><span data-cursor-benefit>Move through the catalog to see useful controls respond.</span><button class="cursor-log-clear" type="button" data-cursor-clear data-tooltip="Delete the local interaction log now">Clear local log</button></div>
+      <div class="cursor-log" aria-label="Recent local interaction benefits" data-cursor-log></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand"><a class="brand" href="/" aria-label="Common Ground home"><span class="brand-mark">cg</span><span>common ground</span></a><p>A considered catalog for useful, durable, quietly beautiful things.</p></div>
+    <nav class="footer-nav" aria-label="Footer navigation"><a href="#collections">Collections</a><a href="#about">Our point of view</a><a href="mailto:hello@commonground.example">Contact</a></nav>
+    <div class="footer-business"><span>Independent product discovery</span><span>© 2026 Common Ground · Original design and catalog</span><span class="site-status" data-site-status role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span><span>Checking site</span></span></div>
+  </footer>
+
+    <div class="tooltip" role="tooltip" data-tooltip-popover hidden></div>
+
+  <dialog class="product-dialog" data-dialog aria-labelledby="dialog-title" aria-describedby="dialog-description">
+    <button class="dialog-close" data-dialog-close type="button" aria-label="Close product details">×</button>
+    <div class="dialog-image"><img data-dialog-image alt=""></div>
+    <div class="dialog-content"><p class="eyebrow" data-dialog-maker></p><h2 id="dialog-title" data-dialog-title></h2><p class="dialog-description" id="dialog-description" data-dialog-description></p><div class="dialog-meta"><strong data-dialog-price></strong><span data-dialog-rating></span></div><button class="save-action" data-dialog-save type="button">♡ Save product</button></div>
+  </dialog>
+  <script type="module" src="/assets/js/security-status-vue.js" defer></script>
+</body>
+</html>

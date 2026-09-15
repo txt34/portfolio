@@ -29,6 +29,11 @@ const cursorLiveBox = document.querySelector('.cursor-console-live');
 const cursorTracker = document.querySelector('[data-cursor-tracker]');
 const cursorFloatFeed = document.querySelector('[data-cursor-float-feed]');
 const tooltip = document.querySelector('[data-tooltip-popover]');
+const signInDialog = document.querySelector('[data-sign-in-dialog]');
+const signInForm = document.querySelector('[data-sign-in-form]');
+const signInMessage = document.querySelector('[data-sign-in-message]');
+const signInOpenButton = document.querySelector('[data-sign-in-open]');
+const signInCloseButton = document.querySelector('[data-sign-in-close]');
 let dialogProduct;
 let searchTimer;
 let catalogRequestController;
@@ -105,6 +110,18 @@ const showTooltip = (target) => {
 };
 
 const hideTooltip = () => { tooltip.hidden = true; };
+
+const basicAuthorization = (username, password) => {
+  const bytes = new TextEncoder().encode(`${username}:${password}`);
+  return `Basic ${btoa(String.fromCharCode(...bytes))}`;
+};
+
+const openSignIn = () => {
+  signInMessage.classList.remove('success');
+  signInMessage.textContent = '';
+  if (typeof signInDialog.showModal === 'function') signInDialog.showModal();
+  signInDialog.querySelector('[name="username"]').focus();
+};
 
 document.addEventListener('pointerover', (event) => showTooltip(event.target.closest?.('[data-tooltip]')));
 document.addEventListener('pointerout', (event) => {
@@ -267,6 +284,46 @@ searchInput.addEventListener('input', () => {
 dialogSave.addEventListener('click', () => toggleSaved(dialogProduct.id));
 document.querySelector('[data-dialog-close]').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+signInOpenButton.addEventListener('click', openSignIn);
+signInCloseButton.addEventListener('click', () => signInDialog.close());
+signInDialog.addEventListener('click', (event) => { if (event.target === signInDialog) signInDialog.close(); });
+signInForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const fields = new FormData(signInForm);
+  const username = String(fields.get('username') ?? '').trim();
+  const password = String(fields.get('password') ?? '');
+  const submit = signInForm.querySelector('button[type="submit"]');
+  if (!username || !password) return;
+  if (window.location.protocol !== 'https:') {
+    signInMessage.classList.remove('success');
+    signInMessage.textContent = 'Sign in is available only over a secure HTTPS connection.';
+    signInForm.elements.password.value = '';
+    return;
+  }
+
+  submit.disabled = true;
+  signInMessage.classList.remove('success');
+  signInMessage.textContent = 'Verifying access…';
+  try {
+    const response = await fetch('/api/protected', {
+      cache: 'no-store',
+      headers: { Authorization: basicAuthorization(username, password) }
+    });
+    if (!response.ok) throw new Error('Access verification failed');
+    const payload = await response.json();
+    signInMessage.classList.add('success');
+    signInMessage.textContent = `Last access check verified ${payload.username}.`;
+    signInOpenButton.innerHTML = '<span class="sign-in-button-mark" aria-hidden="true"></span>Check verified';
+    signInOpenButton.dataset.tooltip = 'Your most recent access check was verified; credentials are not retained';
+    signInForm.reset();
+  } catch {
+    signInMessage.classList.remove('success');
+    signInMessage.textContent = 'We could not verify those credentials. Please try again.';
+  } finally {
+    signInForm.elements.password.value = '';
+    submit.disabled = false;
+  }
+});
 window.addEventListener('pagehide', () => cursorLog.replaceChildren());
 saveState();
 loadProducts();

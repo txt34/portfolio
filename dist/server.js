@@ -29,6 +29,7 @@ const publicOrigin = process.env.PUBLIC_ORIGIN ?? (isCodespaces ? `https://local
 const maxRequestBytes = Number(process.env.MAX_REQUEST_BYTES ?? 100_000);
 const dataDirectory = path.resolve(process.env.DATA_DIR ?? path.join(process.cwd(), 'data'));
 const sessionSecret = process.env.SESSION_SECRET;
+const metricsToken = process.env.METRICS_TOKEN;
 const serverStartedAt = new Date();
 const diagnosticEvents = [];
 const diagnosticSubscribers = new Set();
@@ -56,8 +57,11 @@ const publishDiagnosticEvent = (event) => {
         }
     }
 };
-if (!sessionSecret || (isProduction && (sessionSecret.length < 32 || sessionSecret === 'change-this-for-local-development'))) {
+if (!sessionSecret || sessionSecret.length < 32 || sessionSecret === 'change-this-for-local-development') {
     throw new Error('A strong SESSION_SECRET is required.');
+}
+if (metricsToken && metricsToken.length < 32) {
+    throw new Error('METRICS_TOKEN must be at least 32 characters when configured.');
 }
 if (!isCodespaces && (!fs.existsSync(keyPath) || !fs.existsSync(certificatePath))) {
     if (isProduction)
@@ -81,6 +85,7 @@ const listenOnPort = (server, port, label) => new Promise((resolve, reject) => {
     });
 });
 app.disable('x-powered-by');
+app.set('query parser', 'simple');
 app.set('trust proxy', isCodespaces || isProduction ? 1 : false);
 app.use((req, res, next) => {
     const requestId = randomUUID();
@@ -134,6 +139,12 @@ app.use(rateLimit({
     legacyHeaders: false,
     message: { error: 'Too many requests. Try again later.' }
 }));
+app.use('/api', (req, res, next) => {
+    res.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+    if (Object.values(req.query).some(Array.isArray))
+        return res.status(400).json({ error: 'Repeated query parameters are not supported' });
+    next();
+});
 const registry = new client.Registry();
 client.collectDefaultMetrics({ register: registry });
 const requestDuration = new client.Histogram({
@@ -158,10 +169,9 @@ app.use((req, res, next) => {
     next();
 });
 app.get('/metrics', async (req, res) => {
-    const metricsToken = process.env.METRICS_TOKEN;
     if (!metricsToken || req.get('authorization') !== `Bearer ${metricsToken}`)
         return res.status(404).end();
-    res.type(registry.contentType).send(await registry.metrics());
+    res.set('Cache-Control', 'no-store').type(registry.contentType).send(await registry.metrics());
 });
 app.get('/healthz', (_req, res) => {
     res.status(serverReady && !shuttingDown ? 200 : 503).json({
@@ -193,11 +203,11 @@ app.get('/api/security-status', securityStatusLimiter, (_req, res) => {
 });
 app.use(cookieParser());
 app.use(session({
-    name: 'app.sid',
+    name: '__Host-app.sid',
     secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true, httpOnly: true, sameSite: 'strict', maxAge: 60 * 60 * 1000 }
+    cookie: { path: '/', secure: true, httpOnly: true, sameSite: 'strict', maxAge: 60 * 60 * 1000 }
 }));
 app.use(csurf({ cookie: { key: '__Host-csrf', httpOnly: true, sameSite: 'strict', secure: true } }));
 app.use('/assets', express.static(path.join(__dirname, '..', 'assets'), {
@@ -206,10 +216,6 @@ app.use('/assets', express.static(path.join(__dirname, '..', 'assets'), {
     maxAge: isProduction ? '7d' : 0,
     immutable: isProduction
 }));
-app.use('/api', (_req, res, next) => {
-    res.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
-    next();
-});
 app.get('/robots.txt', (_req, res) => {
     res.type('text/plain').send('User-agent: *\nDisallow: /api/\nDisallow: /metrics\n');
 });
@@ -217,7 +223,7 @@ app.get('/.well-known/security.txt', (_req, res) => {
     res.type('text/plain').send('Contact: mailto:security@commonground.example\nExpires: 2027-09-15T00:00:00.000Z\nPreferred-Languages: en\n');
 });
 app.get('/api/csrf-token', (req, res) => {
-    res.json({ csrfToken: req.csrfToken() });
+    res.set('Cache-Control', 'no-store').json({ csrfToken: req.csrfToken() });
 });
 app.get('/', (_req, res) => res.sendFile(path.join(__dirname, '..', 'assets', 'index.html')));
 app.get('/api/products', [
@@ -280,6 +286,7 @@ const authLimiter = rateLimit({
     message: { error: 'Too many authentication attempts. Try again later.' }
 });
 const authenticate = async (req, res, next) => {
+    res.set('Cache-Control', 'no-store');
     const match = /^Basic ([A-Za-z0-9+/]+=*)$/.exec(req.get('authorization') ?? '');
     if (!match) {
         res.set('WWW-Authenticate', 'Basic realm="protected-api"');
@@ -298,7 +305,12 @@ const authenticate = async (req, res, next) => {
     authenticatedRequests += 1;
     return next();
 };
-app.post('/api/data-pipe', authLimiter, authenticate, (req, res) => {
+const requirePlainText = (req, res, next) => {
+    if (!req.is('text/plain'))
+        return res.status(415).json({ error: 'Content-Type must be text/plain' });
+    return next();
+};
+app.post('/api/data-pipe', authLimiter, authenticate, requirePlainText, (req, res) => {
     const declaredLength = Number(req.get('content-length') ?? 0);
     if (declaredLength > maxRequestBytes)
         return res.status(413).json({ error: 'Request body too large' });
@@ -330,10 +342,10 @@ app.post('/api/data-pipe', authLimiter, authenticate, (req, res) => {
     });
 });
 app.get('/api/protected', authLimiter, authenticate, (req, res) => {
-    res.json({ message: 'Welcome to the protected API.', username: req.user.username });
+    res.set('Cache-Control', 'no-store').json({ message: 'Welcome to the protected API.', username: req.user.username });
 });
 app.get('/api/diagnostics', authLimiter, authenticate, (_req, res) => {
-    res.json({
+    res.set('Cache-Control', 'no-store').json({
         status: 'ok',
         serverTime: new Date().toISOString(),
         startedAt: serverStartedAt.toISOString(),
@@ -350,7 +362,7 @@ app.get('/api/diagnostics/feed', authLimiter, authenticate, (_req, res) => {
     if (diagnosticSubscribers.size >= maxSubscribers)
         return res.status(429).json({ error: 'Diagnostics feed is at capacity' });
     res.status(200).set({
-        'Cache-Control': 'no-cache, no-transform',
+        'Cache-Control': 'no-store, no-transform',
         Connection: 'keep-alive',
         'Content-Type': 'text/event-stream',
         'X-Accel-Buffering': 'no'
@@ -393,7 +405,12 @@ const startServers = async () => {
         serverReady = true;
         return;
     }
-    const tlsOptions = { key: fs.readFileSync(keyPath), cert: fs.readFileSync(certificatePath) };
+    const tlsOptions = {
+        key: fs.readFileSync(keyPath),
+        cert: fs.readFileSync(certificatePath),
+        minVersion: 'TLSv1.2',
+        honorCipherOrder: true
+    };
     const httpsServer = https.createServer(tlsOptions, app);
     const httpServer = http.createServer((req, res) => {
         const origin = publicOrigin ?? `https://localhost:${HTTPS_PORT}`;

@@ -1,17 +1,33 @@
-# Application Build
+# Common Ground
 
-Common Ground is a full-stack product discovery experience: a calm, searchable catalog for finding well-made products across home, workspaces, tech, outdoors, and wear. It is powered by a Node.js + Express API and includes a production-oriented security baseline: secure transport, hardened sessions, CSRF protection, rate limiting, strict validation, bcrypt-backed authentication, bounded streaming, safe errors, and protected metrics.
+## Production-ready prototype in 30 seconds
+
+Common Ground is a polished, responsive product-discovery prototype for browsing curated home, workspace, tech, outdoor, and wear products. Visitors can search, filter, save items locally, and view product details on any screen size.
+
+It is built as a production-minded Node.js and Express foundation: HTTPS support, hardened sessions, CSRF protection, validation, bcrypt-backed authentication, rate limiting, safe errors, health checks, protected metrics, and graceful shutdown are already in place. The catalog data is intentionally in-process for prototyping; moving to production requires a managed identity provider, durable session and rate-limit stores, persistent product data, managed TLS, and centralized observability.
 
 ![Sample](PIC1.png)
 ![Sample](PIC2.png)
 ## What the application does
 
 - Serves a responsive product discovery experience with search, categories, saved items, and product detail views
+- Keeps the catalog usable during ongoing health and security-status checks
 - Starts an Express API on HTTPS and redirects HTTP traffic to HTTPS
 - Exposes catalog, example, and protected routes for demonstration and testing
 - Uses Helmet, CSRF middleware, session cookies, and input validation
 - Tracks request metrics and exposes them on `/metrics` only with a bearer token
 - Uses environment-backed authentication and centralized authorization
+
+## Security and OWASP coverage
+
+Security controls are enforced at the server boundary for every connection; hidden interface elements or URL obscurity are never used as access control. The implementation covers the repository's `security/` and `security/owasp/` guidance with:
+
+- HTTPS with HTTP-to-HTTPS redirects in normal deployments, TLS 1.2 minimums, a restrictive Content Security Policy, Helmet headers, and no browser-delivered secrets.
+- `__Host-` secure, HttpOnly, SameSite session and CSRF cookies; bcrypt password verification; authenticated diagnostics; protected metrics; and endpoint-specific abuse limits.
+- Allow-listed catalog inputs, rejected duplicate query parameters, bounded request bodies, `text/plain`-only streamed uploads, opaque server errors, no-store responses for sensitive endpoints, and UUID-based server-side file names.
+- Request IDs, bounded diagnostic events, authentication failure logging without credentials, health checks, graceful shutdown, and dependency auditing through `npm run audit`.
+
+The checked-in OWASP notes are implementation guidance, not a compliance certification. Before a public production deployment, use managed TLS and secrets, a durable session/rate-limit store, a real identity provider and product datastore, centralized monitoring, and routine dependency remediation.
 
 ## Prerequisites
 
@@ -24,7 +40,7 @@ From the project root:
 
 ```bash
 npm install
-npm run dev
+SESSION_SECRET="$(node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))")" npm run dev
 ```
 
 Then open:

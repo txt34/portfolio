@@ -2,7 +2,7 @@
 
 ## Production-ready prototype in 30 seconds
 
-Common Ground is a polished, responsive product-discovery prototype for browsing curated home, workspace, tech, outdoor, and wear products. Visitors can search, filter, save items locally, and view product details on any screen size.
+Common Ground is a polished, responsive product-discovery prototype for browsing curated home, workspace, tech, outdoor, and wear products. Visitors can filter, save items locally, and view product details on any screen size.
 
 It is built as a production-minded Node.js and Express foundation: HTTPS support, hardened sessions, CSRF protection, validation, bcrypt-backed authentication, rate limiting, safe errors, health checks, protected metrics, and graceful shutdown are already in place. The catalog data is intentionally in-process for prototyping; moving to production requires a managed identity provider, durable session and rate-limit stores, persistent product data, managed TLS, and centralized observability.
 
@@ -10,13 +10,21 @@ It is built as a production-minded Node.js and Express foundation: HTTPS support
 ![Sample](PIC2.png)
 ## What the application does
 
-- Serves a responsive product discovery experience with search, categories, saved items, and product detail views
-- Keeps the catalog usable during ongoing health and security-status checks
+- Serves a responsive product discovery experience with category filters, saved items, and product detail views
+- Keeps the catalog usable while the browser checks its protection status
 - Starts an Express API on HTTPS and redirects HTTP traffic to HTTPS
 - Exposes catalog, example, and protected routes for demonstration and testing
 - Uses Helmet, CSRF middleware, session cookies, and input validation
 - Tracks request metrics and exposes them on `/metrics` only with a bearer token
 - Uses environment-backed authentication and centralized authorization
+
+## Interface and session monitoring
+
+The interface uses a calm Manrope and Lora type system, Google-color accents, responsive layouts, accessible dialogs, and the original catalog imagery.
+
+The **Protection is on** panel presents each server-reported control as an even modular card. Its live activity screen is limited to the current browser session: it records periodic status checks plus browser connectivity and visibility changes, retains only the latest 12 entries in memory, and never exposes protected diagnostic data.
+
+The sign-in panel verifies the existing protected API only over HTTPS. It refuses to send credentials from an HTTP local preview, clears the password field after a check, and never writes credentials to browser storage.
 
 ## Security and OWASP coverage
 

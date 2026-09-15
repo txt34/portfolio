@@ -2,6 +2,8 @@
 
 Common Ground is a full-stack product discovery experience: a calm, searchable catalog for finding well-made products across home, workspaces, tech, outdoors, and wear. It is powered by a Node.js + Express API and includes a production-oriented security baseline: secure transport, hardened sessions, CSRF protection, rate limiting, strict validation, bcrypt-backed authentication, bounded streaming, safe errors, and protected metrics.
 
+![Sample](PIC1.png)
+![Sample](PIC2.png)
 ## What the application does
 
 - Serves a responsive product discovery experience with search, categories, saved items, and product detail views

@@ -4,6 +4,7 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'node:url';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
@@ -11,32 +12,65 @@ import csurf from 'csurf';
 import rateLimit from 'express-rate-limit';
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
-import logger from './utils/logger';
+import logger from './utils/logger.js';
 import client from 'prom-client';
-import { exampleApiHandler } from './api/example-api';
+import { exampleApiHandler } from './api/example-api.js';
 
 dotenv.config();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-const HTTPS_PORT = process.env.HTTPS_PORT || 3443;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Placeholder for SSL certificates (for local development)
-// In production, these would be managed securely.
+const app: express.Express = express();
+const PORT = Number(process.env.PORT || 3000);
+const HTTPS_PORT = Number(process.env.HTTPS_PORT || 3443);
+const CERT_DIR = path.resolve(__dirname, '..', 'certificates');
+const KEY_PATH = path.join(CERT_DIR, 'key.pem');
+const CERT_PATH = path.join(CERT_DIR, 'cert.pem');
+
+const findAvailablePort = (startPort: number): Promise<number> =>
+  new Promise((resolve, reject) => {
+    const tryPort = (port: number) => {
+      const tester = http.createServer();
+      tester.once('error', (error: NodeJS.ErrnoException) => {
+        if (error.code === 'EADDRINUSE') {
+          tryPort(port + 1);
+          return;
+        }
+        reject(error);
+      });
+      tester.once('listening', () => {
+        const address = tester.address();
+        const chosenPort = typeof address === 'object' && address ? address.port : port;
+        tester.close(() => resolve(chosenPort));
+      });
+      tester.listen(port);
+    };
+
+    tryPort(startPort);
+  });
+
+if (!fs.existsSync(KEY_PATH) || !fs.existsSync(CERT_PATH)) {
+  logger.warn('Local HTTPS certificate not found; generating a self-signed certificate for development.');
+  fs.mkdirSync(CERT_DIR, { recursive: true });
+  const { execSync } = await import('node:child_process');
+  execSync(`openssl req -x509 -newkey rsa:2048 -keyout "${KEY_PATH}" -out "${CERT_PATH}" -days 365 -nodes -subj "/CN=localhost"`, { stdio: 'inherit' });
+}
+
 const options = {
-  key: fs.readFileSync('./certificates/key.pem'),
-  cert: fs.readFileSync('./certificates/cert.pem')
+  key: fs.readFileSync(KEY_PATH),
+  cert: fs.readFileSync(CERT_PATH)
 };
 
-app.use(express.json());
-app.use(helmet());
+app.use(express.json() as express.RequestHandler);
+app.use(helmet() as express.RequestHandler);
 
 // Apply rate limiting to all requests
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per windowMs
   message: "Too many requests from this IP, please try again after 15 minutes"
-});
+}) as express.RequestHandler;
 app.use(limiter);
 
 // Prometheus Metrics
@@ -62,16 +96,16 @@ const activeConnections = new client.Gauge({
 register.registerMetric(activeConnections);
 
 // Middleware to track active connections
-app.use((req, res, next) => {
+app.use(((req: express.Request, res: express.Response, next: express.NextFunction) => {
   activeConnections.inc();
   res.on('finish', () => {
     activeConnections.dec();
   });
   next();
-});
+}) as express.RequestHandler);
 
 // Middleware to measure request duration
-app.use((req, res, next) => {
+app.use(((req: express.Request, res: express.Response, next: express.NextFunction) => {
   const end = httpRequestDurationMicroseconds.startTimer();
   res.on('finish', () => {
     end({
@@ -81,7 +115,7 @@ app.use((req, res, next) => {
     });
   });
   next();
-});
+}) as express.RequestHandler);
 
 app.get('/metrics', async (req, res) => {
   res.set('Content-Type', register.contentType);
@@ -89,15 +123,13 @@ app.get('/metrics', async (req, res) => {
 });
 
 // CSRF Protection
-app.use(cookieParser());
+app.use(cookieParser() as express.RequestHandler);
 const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {
-  logger.error('SESSION_SECRET is not defined. Please set it in your .env file or environment variables.');
   if (process.env.NODE_ENV === 'production') {
     throw new Error('SESSION_SECRET is required in production!');
-  } else {
-    logger.warn('Using a default session secret for development. Set SESSION_SECRET for better security.');
   }
+  logger.warn('SESSION_SECRET is not defined. Using a default session secret for development. Set SESSION_SECRET in a local .env file for better security.');
 }
 
 app.use(session({
@@ -105,12 +137,13 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: { secure: true, httpOnly: true, sameSite: 'strict' }
-}));
-app.use(csurf({ cookie: true }));
+}) as express.RequestHandler);
+app.use(csurf({ cookie: true }) as express.RequestHandler);
 
 // Provide CSRF token to frontend
 app.get('/api/csrf-token', (req: express.Request, res: express.Response) => {
-  res.json({ csrfToken: req.csrfToken() });
+  const requestWithCsrf = req as express.Request & { csrfToken: () => string };
+  res.json({ csrfToken: requestWithCsrf.csrfToken() });
 });
 
 // Root route
@@ -234,18 +267,26 @@ app.get('/api/admin', authenticate, authorize(['admin']), (req: any, res) => {
   res.send(`Welcome to the admin API, ${req.user.username}! You have admin privileges.`);
 });
 
-// Start HTTPS server
-https.createServer(options, app).listen(HTTPS_PORT, () => {
-  logger.info(`HTTPS Server running on port ${HTTPS_PORT}`);
-});
+const startServers = async () => {
+  const httpPort = await findAvailablePort(PORT);
+  const httpsPort = await findAvailablePort(HTTPS_PORT);
 
-// Start HTTP server for redirection
-http.createServer((req, res) => {
-  logger.info(`HTTP request on port ${PORT}. Redirecting to HTTPS...`, { originalUrl: req.url });
-  res.writeHead(301, { "Location": "https://" + req.headers.host?.split(':')[0] + ':' + HTTPS_PORT + req.url });
-  res.end();
-}).listen(PORT, () => {
-  logger.info(`HTTP Server running on port ${PORT}. Redirecting to HTTPS...`);
+  https.createServer(options, app).listen(httpsPort, () => {
+    logger.info(`HTTPS Server running on port ${httpsPort}`);
+  });
+
+  http.createServer((req, res) => {
+    logger.info(`HTTP request on port ${httpPort}. Redirecting to HTTPS...`, { originalUrl: req.url });
+    res.writeHead(301, { "Location": "https://" + req.headers.host?.split(':')[0] + ':' + httpsPort + req.url });
+    res.end();
+  }).listen(httpPort, () => {
+    logger.info(`HTTP Server running on port ${httpPort}. Redirecting to HTTPS...`);
+  });
+};
+
+startServers().catch((error) => {
+  logger.error('Failed to start servers', error);
+  process.exit(1);
 });
 
 // Error handling middleware

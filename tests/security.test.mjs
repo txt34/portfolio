@@ -64,6 +64,9 @@ test('production security boundaries hold at the HTTP API', async (t) => {
   ])));
   assert.equal(statusPolls.flat().every((response) => response.status === 200), true);
 
+  const repeatedStatusParameter = await fetch(`http://127.0.0.1:${port}/api/security-status?check=one&check=two`);
+  assert.equal(repeatedStatusParameter.status, 400);
+
   const catalog = await fetch(`http://127.0.0.1:${port}/api/products?category=Home`);
   assert.equal(catalog.status, 200);
   assert.match(catalog.headers.get('x-robots-tag') ?? '', /noindex/);
@@ -75,6 +78,9 @@ test('production security boundaries hold at the HTTP API', async (t) => {
 
   const invalidCatalog = await fetch(`http://127.0.0.1:${port}/api/products?category=Unknown`);
   assert.equal(invalidCatalog.status, 400);
+
+  const repeatedCatalogParameter = await fetch(`http://127.0.0.1:${port}/api/products?category=Home&category=Tech`);
+  assert.equal(repeatedCatalogParameter.status, 400);
 
   const invalidProduct = await fetch(`http://127.0.0.1:${port}/api/products/not%20an%20id`);
   assert.equal(invalidProduct.status, 400);
@@ -91,6 +97,7 @@ test('production security boundaries hold at the HTTP API', async (t) => {
 
   const protectedResponse = await fetch(`http://127.0.0.1:${port}/api/protected`);
   assert.equal(protectedResponse.status, 401);
+  assert.equal(protectedResponse.headers.get('cache-control'), 'no-store');
 
   const diagnostics = await fetch(`http://127.0.0.1:${port}/api/diagnostics`);
   assert.equal(diagnostics.status, 401);

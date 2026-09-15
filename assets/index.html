@@ -20,7 +20,7 @@
       <a href="#collections" data-tooltip="Browse products and categories">Collections</a>
       <a href="#about" data-tooltip="Read why this catalog exists">About</a>
     </nav>
-    <div class="header-actions"><button class="saved-button" type="button" data-saved-toggle aria-label="Show saved products" data-tooltip="Your saved products stay in this browser"><span aria-hidden="true">♡</span><span data-saved-count>0</span></button></div>
+    <div class="header-actions"><button class="sign-in-button" type="button" data-sign-in-open data-tooltip="Verify your member access without saving credentials"><span class="sign-in-button-mark" aria-hidden="true"></span>Sign in</button><button class="saved-button" type="button" data-saved-toggle aria-label="Show saved products" data-tooltip="Your saved products stay in this browser"><span aria-hidden="true">♡</span><span data-saved-count>0</span></button></div>
   </header>
 
   <main id="main-content">
@@ -75,6 +75,20 @@
     <button class="dialog-close" data-dialog-close type="button" aria-label="Close product details">×</button>
     <div class="dialog-image"><img data-dialog-image alt=""></div>
     <div class="dialog-content"><p class="eyebrow" data-dialog-maker></p><h2 id="dialog-title" data-dialog-title></h2><p class="dialog-description" id="dialog-description" data-dialog-description></p><div class="dialog-meta"><strong data-dialog-price></strong><span data-dialog-rating></span></div><button class="save-action" data-dialog-save type="button">♡ Save product</button></div>
+  </dialog>
+  <dialog class="sign-in-dialog" data-sign-in-dialog aria-labelledby="sign-in-title" aria-describedby="sign-in-description">
+    <button class="dialog-close" data-sign-in-close type="button" aria-label="Close sign in">×</button>
+    <div class="sign-in-art" aria-hidden="true"><span class="sign-in-orbit orbit-blue"></span><span class="sign-in-orbit orbit-red"></span><span class="sign-in-orbit orbit-yellow"></span><span class="sign-in-orbit orbit-green"></span><span class="sign-in-art-label">COMMON<br>GROUND</span></div>
+    <form class="sign-in-form" data-sign-in-form>
+      <p class="eyebrow">Member access</p>
+      <h2 id="sign-in-title">Welcome back.</h2>
+      <p id="sign-in-description">Verify your access to private portfolio tools. Credentials are used only for this check and are not placed in browser storage.</p>
+      <label class="sign-in-field"><span>Email or username</span><input name="username" type="text" autocomplete="username" maxlength="64" required></label>
+      <label class="sign-in-field"><span>Password</span><input name="password" type="password" autocomplete="current-password" maxlength="128" required></label>
+      <p class="sign-in-message" data-sign-in-message role="status" aria-live="polite"></p>
+      <button class="sign-in-submit" type="submit"><span>Verify access</span><span aria-hidden="true">→</span></button>
+      <p class="sign-in-note">Protected by the same server-side authentication controls used for every private route.</p>
+    </form>
   </dialog>
   <script type="module" src="/assets/js/security-status-vue.js" defer></script>
 </body>

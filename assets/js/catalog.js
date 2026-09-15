@@ -1,6 +1,5 @@
 const state = {
   category: '',
-  search: '',
   saved: new Set(JSON.parse(localStorage.getItem('common-ground-saved') || '[]')),
   products: []
 };
@@ -9,7 +8,6 @@ const productGrid = document.querySelector('[data-product-grid]');
 const categories = document.querySelector('[data-categories]');
 const emptyState = document.querySelector('[data-empty]');
 const savedCount = document.querySelector('[data-saved-count]');
-const searchInput = document.querySelector('[data-search]');
 const dialog = document.querySelector('[data-dialog]');
 const dialogImage = document.querySelector('[data-dialog-image]');
 const dialogTitle = document.querySelector('[data-dialog-title]');
@@ -35,7 +33,6 @@ const signInMessage = document.querySelector('[data-sign-in-message]');
 const signInOpenButton = document.querySelector('[data-sign-in-open]');
 const signInCloseButton = document.querySelector('[data-sign-in-close]');
 let dialogProduct;
-let searchTimer;
 let catalogRequestController;
 let cursorFrame;
 let lastCursorZone = '';
@@ -253,7 +250,6 @@ const renderProducts = (productList) => {
 
 const loadProducts = async () => {
   const parameters = new URLSearchParams();
-  if (state.search) parameters.set('search', state.search);
   if (state.category) parameters.set('category', state.category);
   catalogRequestController?.abort();
   catalogRequestController = new AbortController();
@@ -272,15 +268,6 @@ const loadProducts = async () => {
   }
 };
 
-searchInput.addEventListener('input', () => {
-  state.search = searchInput.value.trim();
-  cursorState.textContent = 'Search protected';
-  cursorBenefit.textContent = 'Search updates this view, but typed text is never added to the live log.';
-  cursorLog.prepend(createBenefitEntry('Search refreshed privately; typed text was not stored.'));
-  while (cursorLog.children.length > 3) cursorLog.lastElementChild.remove();
-  window.clearTimeout(searchTimer);
-  searchTimer = window.setTimeout(loadProducts, 180);
-});
 dialogSave.addEventListener('click', () => toggleSaved(dialogProduct.id));
 document.querySelector('[data-dialog-close]').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });

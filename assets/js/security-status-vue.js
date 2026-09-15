@@ -114,13 +114,14 @@ const ProtectionStatus = {
             h('button', { type: 'button', onClick: this.clearActivity }, 'Clear log')
           ])
         ]),
-        h('ol', {
-          ref: this.setLogScreen,
-          class: 'protection-log-screen',
+        h('div', {
           role: 'log',
           'aria-live': 'polite',
           'aria-label': 'Protection activity during this browser session'
-        }, logEntries)
+        }, [h('ol', {
+          ref: this.setLogScreen,
+          class: 'protection-log-screen'
+        }, logEntries)])
       ])
     ]);
   }

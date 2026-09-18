@@ -3,99 +3,280 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A considered collection of products worth bringing into your everyday.">
-  <title>Common Ground / Product discovery</title>
+  <meta name="description" content="Devin Holmes - Software Engineer & Computer Scientist portfolio. Secure code, AI systems, and robust architecture.">
+  <title>Common Ground / Devin Holmes / Software Engineer</title>
   <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="/assets/css/catalog.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.3.2/pixi.min.js" defer></script>
   <script type="module" src="/assets/js/loading-sequence.js" defer></script>
   <script type="module" src="/assets/js/catalog.js" defer></script>
+  <script src="/assets/js/graphics-engine.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <div class="opening-sequence" role="status" aria-live="polite" aria-label="Preparing Common Ground">
-    <span class="opening-kicker">COMMON GROUND / 001</span>
-    <strong>Good things,<br><em>well found.</em></strong>
-    <span class="opening-line" aria-hidden="true"></span>
-    <span class="opening-status"><span data-loading-message>Creating a calm beginning</span><span class="opening-step" data-loading-step>01 / 03</span></span>
-    <span class="opening-progress" aria-hidden="true"><span data-loading-progress></span></span>
+  
+  <div class="opening-sequence" role="status" aria-live="polite" aria-label="Preparing Devin Holmes Portfolio">
+    <div class="diagonal-bg-left"></div>
+    <div class="diagonal-bg-right"></div>
+    <div class="opening-side-left">
+      <img src="/assets/images/fordham-ram.svg" alt="Devin Holmes Fordham Rams #85" class="opening-svg-badge">
+      <span class="mascot-side-label">DEVIN HOLMES · #85</span>
+    </div>
+    <div class="opening-side-right">
+      <img src="/assets/images/bgsu-crest.svg" alt="BGSU Falcon Degree" class="opening-svg-badge">
+      <span class="mascot-side-label">BGSU · FALCONS</span>
+    </div>
+    <div class="opening-center-content">
+      <span class="opening-kicker">DEVIN HOLMES · #85 - TIGHT END - FORDHAM RAMS</span>
+      <strong>BGSU Brown & Orange<br><em>Fordham Maroon & White.</em></strong>
+      <span class="opening-line" aria-hidden="true"></span>
+      <span class="opening-status"><span data-loading-message>Initializing secure environments</span><span class="opening-step" data-loading-step>01 / 03</span></span>
+      <span class="opening-progress" aria-hidden="true"><span data-loading-progress></span></span>
+    </div>
   </div>
+
   <header class="site-header">
-    <a class="brand" href="/" aria-label="Common Ground home" data-tooltip="Return to the Common Ground home page"><span class="brand-mark">cg</span><span>common ground</span></a>
+    <a class="brand" href="/" aria-label="Common Ground home" data-tooltip="Devin Holmes · Software Engineer Portfolio">
+      <span class="brand-mark">DH</span>
+      <span>Common Ground</span>
+    </a>
     <nav class="primary-nav" aria-label="Primary navigation">
-      <a class="active" href="#discover" data-tooltip="Jump to the introduction">Discover</a>
-      <a href="#collections" data-tooltip="Browse products and categories">Collections</a>
-      <a href="#about" data-tooltip="Read why this catalog exists">About</a>
+      <a class="active" href="#discover" data-tooltip="Jump to introduction">Discover</a>
+      <a href="#about" data-tooltip="Explore background, discipline & education">Profile</a>
+      <a href="#marquee" data-tooltip="Live marquee feed">Live Feed</a>
+      <a href="#protection-app" data-tooltip="Cybersecurity & defense console">Security</a>
+      <a href="#collections" data-tooltip="Browse technical projects & architectures">Projects</a>
+      <a href="#console" data-tooltip="Local interaction telemetry">Console</a>
     </nav>
-    <div class="header-actions"><button class="sign-in-button" type="button" data-sign-in-open data-tooltip="Verify your member access without saving credentials"><span class="sign-in-button-mark" aria-hidden="true"></span>Sign in</button><button class="saved-button" type="button" data-saved-toggle aria-label="Show saved products" data-tooltip="Your saved products stay in this browser"><span aria-hidden="true">♡</span><span data-saved-count>0</span></button></div>
+    <div class="header-actions">
+      <span class="site-status" data-site-status role="status" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>Checking site</span>
+      </span>
+      <button class="sign-in-button" type="button" data-sign-in-open data-tooltip="Verify member access securely">
+        <span class="sign-in-button-mark" aria-hidden="true"></span>Sign in
+      </button>
+      <button class="saved-button" type="button" data-saved-toggle aria-label="Show saved projects" data-tooltip="Your saved items in this browser">
+        <span aria-hidden="true">♡</span>
+        <span data-saved-count>0</span>
+      </button>
+    </div>
   </header>
 
-  <main id="main-content">
-    <section class="hero" id="discover">
+  <main id="main-content" class="newspaper-feed-grid">
+    <section class="hero fordham-jesuit-pattern news-col-12" id="discover">
       <div class="hero-copy">
-        <p class="eyebrow">The considered catalog</p>
-        <h1>Good things,<br><em>well found.</em></h1>
-        <p class="hero-text">A quieter way to discover products made with purpose, selected for how they live with you.</p>
-        <a class="text-link" href="#collections" data-tooltip="Move to the product collection">Explore the collection <span aria-hidden="true">↘</span></a>
+        <p class="eyebrow">Computer Scientist | Software Engineer</p>
+        <h1>Devin Holmes<br><em>Secure code & AI systems.</em></h1>
+        <p class="hero-text">Computer Science graduate from Bowling Green State University and former NCAA Division I student-athlete at Fordham. Specializing in secure web applications, Python/C++/C# development, and resilient software architecture.</p>
+        <a class="text-link" href="#collections" data-tooltip="View technical projects and portfolio">Explore my portfolio <span aria-hidden="true">↘</span></a>
       </div>
-      <div class="hero-art" aria-label="A curated selection of everyday objects" role="img">
+      <div class="hero-art" aria-label="Devin Holmes professional profile" role="img">
         <div class="hero-card hero-card-back"></div>
-        <div class="hero-card hero-card-front"><span>OBJECT<br>NO. 024</span><strong>Made for<br>the daily.</strong></div>
-        <span class="hero-note">01 / 06</span>
+        <div class="hero-card hero-card-front">
+          <span>DEVIN<br>HOLMES</span>
+          <strong>BGSU '26<br>Fordham.</strong>
+        </div>
+        <span class="hero-note">CS / SEC</span>
       </div>
     </section>
 
-    <section class="protection-feed" id="protection-app" aria-labelledby="protection-title"><p class="eyebrow">Live by design</p><h2 id="protection-title">Protection is on.</h2></section>
-
-    <section class="catalog-section" id="collections" aria-labelledby="collection-title">
+    <section class="catalog-section news-col-12" id="collections" aria-labelledby="collection-title">
       <div class="section-heading">
-        <div><p class="eyebrow">Browse the edit</p><h2 id="collection-title">Find your next favorite.</h2></div>
+        <div>
+          <p class="eyebrow">Technical Portfolio & Architectures</p>
+          <h2 id="collection-title">Featured Projects & Systems.</h2>
+        </div>
       </div>
       <div class="filter-row" data-categories role="group" aria-label="Filter by category"></div>
       <div class="product-grid" data-product-grid aria-live="polite"></div>
-      <p class="empty-state" data-empty hidden>No products match that search. Try another angle.</p>
+      <p class="empty-state" data-empty hidden>No projects match that filter. Try selecting another category.</p>
     </section>
 
-    <section class="manifesto" id="about">
-      <p class="eyebrow">Why Common Ground</p>
-      <p class="manifesto-copy">Less noise. Better objects.<br><em>A little more intention.</em></p>
-      <span class="manifesto-rule" aria-hidden="true"></span>
-      <p class="manifesto-detail">We look for the useful, the durable, and the quietly beautiful. The things you reach for every day, and keep reaching for.</p>
+    <section class="resume-metrics-bar news-col-12" aria-label="Professional impact highlights">
+      <div class="metric-item">
+        <strong>150+</strong>
+        <span>CS Credit Hours (BGSU)</span>
+      </div>
+      <div class="metric-item">
+        <strong>NCAA D1</strong>
+        <span>Student-Athlete (Fordham #85)</span>
+      </div>
+      <div class="metric-item">
+        <strong>676k+ LOC</strong>
+        <span>Java Repository Analysis</span>
+      </div>
+      <div class="metric-item">
+        <strong>OWASP</strong>
+        <span>Secure Architecture Principles</span>
+      </div>
     </section>
 
-    <section class="cursor-console" aria-labelledby="cursor-console-title">
-      <div class="cursor-console-heading"><p class="eyebrow">Local interaction log</p><h2 id="cursor-console-title">Your cursor, working quietly.</h2><p>We use interaction locally to keep the interface responsive. No cursor coordinates or movement history are sent to the server.</p></div>
-      <div class="cursor-console-live" role="status" aria-live="polite"><span class="cursor-pulse" data-cursor-pulse aria-hidden="true"></span><span class="cursor-tracker" data-cursor-tracker aria-hidden="true"></span><span class="cursor-float-feed" data-cursor-float-feed aria-hidden="true">local / live</span><strong data-cursor-state>Waiting for movement</strong><span data-cursor-benefit>Move through the catalog to see useful controls respond.</span><button class="cursor-log-clear" type="button" data-cursor-clear data-tooltip="Delete the local interaction log now">Clear local log</button></div>
+    <section class="protection-feed news-col-12" id="protection-app" aria-labelledby="protection-title">
+      <!-- Reactive Security Feed dynamically rendered by security-status-vue.js -->
+    </section>
+
+    <section class="camera-profile-section bgsu-alchemy-pattern news-col-12" id="about" aria-labelledby="profile-camera-title">
+      <div class="camera-viewfinder-hud" aria-hidden="true">
+        <div class="hud-top-left">
+          <span class="rec-dot"></span>
+          <span class="rec-text">REC [LIVE]</span>
+          <span class="hud-time" data-camera-time>12:45:08:14</span>
+        </div>
+        <div class="hud-top-right">
+          <span>ISO 800</span>
+          <span>f/1.8</span>
+          <span>85mm</span>
+          <span>SECURE_CAM_01</span>
+        </div>
+        <div class="hud-reticle top-left">+</div>
+        <div class="hud-reticle top-right">+</div>
+        <div class="hud-reticle bottom-left">+</div>
+        <div class="hud-reticle bottom-right">+</div>
+      </div>
+
+      <div class="camera-profile-header">
+        <div class="profile-camera-emblem">
+          <img src="/assets/images/fordham-ram.svg" alt="Devin Holmes Profile Emblem" class="profile-avatar-img">
+          <span class="profile-badge-tag">DEVIN HOLMES · #85</span>
+        </div>
+        <div class="camera-title-group">
+          <p class="eyebrow" id="profile-camera-title">Professional Profile</p>
+          <h2>Secure software. Rigorous architecture. Built with discipline.</h2>
+        </div>
+      </div>
+
+      <!-- Paper Pinch-Fold Art Section Viewer -->
+      <div class="pinch-fold-art-container" data-pinch-fold-container>
+        <div class="paper-fold-panel" data-fold-panel>
+          <div class="paper-fold-crease crease-diag-1"></div>
+          <div class="paper-fold-crease crease-diag-2"></div>
+          <div class="paper-fold-crease crease-center"></div>
+          
+          <div class="fold-content-inner" data-fold-content>
+            <!-- Dynamic section content inserted by catalog.js -->
+          </div>
+        </div>
+
+        <div class="pinch-fold-controls">
+          <div class="fold-tabs" data-fold-tabs></div>
+          <div class="fold-actions">
+            <button type="button" class="fold-btn" data-fold-prev aria-label="Previous section">◀ Fold Prev</button>
+            <span class="fold-status-indicator" data-fold-counter>01 / 04</span>
+            <button type="button" class="fold-btn" data-fold-next aria-label="Next section">Unfold Next ▶</button>
+            <button type="button" class="fold-btn auto-toggle" data-fold-auto aria-label="Toggle auto live camera stream">⏸ Live Feed</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="led-marquee-section news-col-12" id="marquee" aria-labelledby="led-marquee-title">
+      <div class="led-signboard" role="status" aria-live="polite">
+        <div class="led-sign-header">
+          <span class="led-dot red"></span>
+          <span class="led-dot yellow"></span>
+          <span class="led-dot green"></span>
+          <span class="led-title" id="led-marquee-title">LIVE MARQUEE</span>
+        </div>
+        <div class="led-screen">
+          <div class="led-text-line headline" data-led-line>SECURE SOFTWARE & RIGOROUS ARCHITECTURE.</div>
+          <div class="led-text-line subline" data-led-subline>BGSU CS · NCAA D1 FORDHAM #85 · OWASP DEFENSES ACTIVE.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cursor-console news-col-12" id="console" aria-labelledby="cursor-console-title">
+      <div class="cursor-console-heading">
+        <p class="eyebrow">Local telemetry log</p>
+        <h2 id="cursor-console-title">Your cursor, working quietly.</h2>
+        <p>We use interaction locally to keep the interface responsive. No cursor coordinates or movement history are sent to the server.</p>
+      </div>
+      <div class="cursor-console-live" role="status" aria-live="polite">
+        <span class="cursor-pulse" data-cursor-pulse aria-hidden="true"></span>
+        <span class="cursor-tracker" data-cursor-tracker aria-hidden="true"></span>
+        <span class="cursor-float-feed" data-cursor-float-feed aria-hidden="true">local / live</span>
+        <strong data-cursor-state>Waiting for movement</strong>
+        <span data-cursor-benefit>Move through the catalog to see useful controls respond.</span>
+        <button class="cursor-log-clear" type="button" data-cursor-clear data-tooltip="Delete the local interaction log now">Clear local log</button>
+      </div>
       <div class="cursor-log" role="log" aria-live="polite" aria-label="Recent local interaction benefits" data-cursor-log></div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-brand"><a class="brand" href="/" aria-label="Common Ground home"><span class="brand-mark">cg</span><span>common ground</span></a><p>A considered catalog for useful, durable, quietly beautiful things.</p></div>
-    <nav class="footer-nav" aria-label="Footer navigation"><a href="#collections">Collections</a><a href="#about">Our point of view</a><a href="mailto:hello@commonground.example">Contact</a></nav>
-    <div class="footer-business"><span>Independent product discovery</span><span>© 2026 Common Ground · Original design and catalog</span><span class="site-status" data-site-status role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span><span>Checking site</span></span></div>
+    <div class="footer-brand">
+      <a class="brand" href="/" aria-label="Common Ground home">
+        <span class="brand-mark">DH</span>
+        <span>Common Ground</span>
+      </a>
+      <p>Devin Holmes · Computer Scientist & Software Engineer. Disciplined, secure, and performant architectures.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="#discover">Discover</a>
+      <a href="#about">Profile & Discipline</a>
+      <a href="#collections">Portfolio Projects</a>
+      <a href="#protection-app">Security Defenses</a>
+    </nav>
+    <div class="footer-business">
+      <span>BGSU Computer Science & NCAA D1 Fordham #85</span>
+      <span>© 2026 Devin Holmes · Common Ground</span>
+      <span class="site-status" data-site-status role="status" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>Checking site</span>
+      </span>
+    </div>
   </footer>
 
-    <div class="tooltip" role="tooltip" data-tooltip-popover hidden></div>
+  <div class="tooltip" role="tooltip" data-tooltip-popover hidden></div>
 
   <dialog class="product-dialog" data-dialog aria-labelledby="dialog-title" aria-describedby="dialog-description">
-    <button class="dialog-close" data-dialog-close type="button" aria-label="Close product details">×</button>
+    <button class="dialog-close" data-dialog-close type="button" aria-label="Close project details">×</button>
     <div class="dialog-image"><img data-dialog-image alt=""></div>
-    <div class="dialog-content"><p class="eyebrow" data-dialog-maker></p><h2 id="dialog-title" data-dialog-title></h2><p class="dialog-description" id="dialog-description" data-dialog-description></p><div class="dialog-meta"><strong data-dialog-price></strong><span data-dialog-rating></span></div><button class="save-action" data-dialog-save type="button">♡ Save product</button></div>
+    <div class="dialog-content">
+      <p class="eyebrow" data-dialog-maker></p>
+      <h2 id="dialog-title" data-dialog-title></h2>
+      <p class="dialog-description" id="dialog-description" data-dialog-description></p>
+      <div class="dialog-meta">
+        <strong data-dialog-price></strong>
+        <span data-dialog-rating></span>
+      </div>
+      <button class="save-action" data-dialog-save type="button">♡ Save project</button>
+    </div>
   </dialog>
+
   <dialog class="sign-in-dialog" data-sign-in-dialog aria-labelledby="sign-in-title" aria-describedby="sign-in-description">
     <button class="dialog-close" data-sign-in-close type="button" aria-label="Close sign in">×</button>
-    <div class="sign-in-art" aria-hidden="true"><span class="sign-in-orbit orbit-blue"></span><span class="sign-in-orbit orbit-red"></span><span class="sign-in-orbit orbit-yellow"></span><span class="sign-in-orbit orbit-green"></span><span class="sign-in-art-label">COMMON<br>GROUND</span></div>
+    <div class="sign-in-art" aria-hidden="true">
+      <span class="sign-in-orbit orbit-blue"></span>
+      <span class="sign-in-orbit orbit-red"></span>
+      <span class="sign-in-orbit orbit-yellow"></span>
+      <span class="sign-in-orbit orbit-green"></span>
+      <span class="sign-in-art-label">DEVIN<br>HOLMES</span>
+    </div>
     <form class="sign-in-form" data-sign-in-form>
       <p class="eyebrow">Member access</p>
       <h2 id="sign-in-title">Welcome back.</h2>
       <p id="sign-in-description">Verify your access to private portfolio tools. Credentials are used only for this check and are not placed in browser storage.</p>
-      <label class="sign-in-field"><span>Email or username</span><input name="username" type="text" autocomplete="username" maxlength="64" required></label>
-      <label class="sign-in-field"><span>Password</span><input name="password" type="password" autocomplete="current-password" maxlength="128" required></label>
+      <label class="sign-in-field">
+        <span>Email or username</span>
+        <input name="username" type="text" autocomplete="username" maxlength="64" required>
+      </label>
+      <label class="sign-in-field">
+        <span>Password</span>
+        <input name="password" type="password" autocomplete="current-password" maxlength="128" required>
+      </label>
       <p class="sign-in-message" data-sign-in-message role="status" aria-live="polite"></p>
-      <button class="sign-in-submit" type="submit"><span>Verify access</span><span aria-hidden="true">→</span></button>
+      <button class="sign-in-submit" type="submit">
+        <span>Verify access</span>
+        <span aria-hidden="true">→</span>
+      </button>
       <p class="sign-in-note">Protected by the same server-side authentication controls used for every private route.</p>
     </form>
   </dialog>
+
   <script type="module" src="/assets/js/security-status-vue.js" defer></script>
 </body>
 </html>

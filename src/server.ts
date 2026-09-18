@@ -138,6 +138,8 @@ app.use(rateLimit({
   max: 100,
   skip: (req) => req.path === '/healthz'
     || req.path === '/api/security-status'
+    || req.path === '/api/ai/metrics'
+    || req.path === '/api/llm/telemetry'
     || req.path.startsWith('/assets/'),
   standardHeaders: 'draft-7',
   legacyHeaders: false,

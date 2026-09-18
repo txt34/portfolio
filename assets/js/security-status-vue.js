@@ -200,7 +200,7 @@ const ProtectionStatus = {
             }
           }
         } catch {}
-      }, 1000);
+      }, 5000);
 
       document.addEventListener('visibilitychange', handleVisibility);
       window.addEventListener('online', handleOnline);

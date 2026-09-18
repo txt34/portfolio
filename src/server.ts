@@ -202,6 +202,13 @@ app.get('/api/security-status', securityStatusLimiter, (_req, res) => {
       requestValidation: 'active',
       csrfProtection: 'active',
       requestSizeLimits: 'active'
+    },
+    systemDiagnostics: {
+      uptimeSeconds: Math.floor(process.uptime()),
+      totalRequests,
+      failedRequests,
+      activeConnections: activeConnectionCount,
+      recentEvents: diagnosticEvents.slice(-8)
     }
   });
 });

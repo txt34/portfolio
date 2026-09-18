@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="fordhamMaroon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8a0322"/>
+      <stop offset="100%" stop-color="#4a0112"/>
+    </linearGradient>
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <!-- Jersey Body -->
+  <path d="M60 40 L40 70 L60 85 L60 170 L140 170 L140 85 L160 70 L140 40 Z" fill="url(#fordhamMaroon)" stroke="#ffffff" stroke-width="4" filter="url(#dropShadow)"/>
+  <!-- Collar -->
+  <path d="M75 40 Q100 65 125 40 Z" fill="#ffffff"/>
+  <!-- Jersey Number 85 -->
+  <text x="100" y="132" font-family="system-ui, sans-serif" font-weight="900" font-size="56" fill="#ffffff" text-anchor="middle">85</text>
+  <!-- Fordham Banner -->
+  <text x="100" y="68" font-family="system-ui, sans-serif" font-weight="700" font-size="12" fill="#fed7aa" text-anchor="middle" letter-spacing="1">FORDHAM</text>
+</svg>

@@ -1,41 +1,28 @@
-# Common Ground
+# Common Ground / Devin Holmes / Software Engineering Portfolio
 
-## Production-ready prototype in 30 seconds
+## Production-Ready Prototype & Enterprise SaaS Architecture
 
-Common Ground is a polished, responsive product-discovery prototype for browsing curated home, workspace, tech, outdoor, and wear products. Visitors can filter, save items locally, and view product details on any screen size.
+Common Ground is a high-performance software engineering portfolio and product-discovery platform created by Devin Holmes (BGSU Computer Science '26, NCAA Division I Football at Fordham #85). It showcases secure web applications, Python/C++/C# architecture, and robust OWASP-aligned security controls.
 
-It is built as a production-minded Node.js and Express foundation: HTTPS support, hardened sessions, CSRF protection, validation, bcrypt-backed authentication, rate limiting, safe errors, health checks, protected metrics, and graceful shutdown are already in place. The catalog data is intentionally in-process for prototyping; moving to production requires a managed identity provider, durable session and rate-limit stores, persistent product data, managed TLS, and centralized observability.
+It features a production-minded Node.js and Express foundation: HTTPS support, hardened sessions, CSRF protection, input validation, bcrypt-backed authentication, rate limiting, Prometheus metrics, and graceful shutdown.
 
 ![Sample](PIC1.png)
 ![Sample](PIC2.png)
-## What the application does
 
-- Serves a responsive product discovery experience with category filters, saved items, and product detail views
-- Keeps the catalog usable while the browser checks its protection status
-- Starts an Express API on HTTPS and redirects HTTP traffic to HTTPS
-- Exposes catalog, example, and protected routes for demonstration and testing
-- Uses Helmet, CSRF middleware, session cookies, and input validation
-- Tracks request metrics and exposes them on `/metrics` only with a bearer token
-- Uses environment-backed authentication and centralized authorization
+## Key Features & Interactive Dashboards
 
-## Interface and session monitoring
+- **Enterprise Revenue & SaaS Monetization Control Center**: Live MRR ($142,850/mo), ARR, active enterprise seat billing, invoice generation, and revenue simulation controls.
+- **Interactive E-Commerce Security Demo Boxes**: Six interactive protection module cards (Transport TLS, Security Headers, Rate Limiting, Request Validation, CSRF Protection, and Request Size Limits) featuring Fordham Rams (Rammy) and BGSU Falcons (Fred Falcon) mascots to simulate live e-commerce sales and revenue boosts.
+- **Live System Diagnostics Feed**: Real-time server uptime, total requests, active connections, and security telemetry streaming directly into the log view.
+- **Typewriter Loading Effect & Persistent Non-Repeating Facts**: Smooth typewriter text rendering for expensive software architecture facts (covering Apache POI 676k+ LOC analysis, bcrypt crypto, zero-copy streams, rate limiting, etc.) backed by `sessionStorage` ensuring zero repeated facts across page reloads and visits.
+- **Local SVG Catalog Assets**: Fully self-contained local SVG graphics ensuring robust, lightning-fast rendering without external image dependencies.
 
-The interface uses a calm Manrope and Lora type system, Google-color accents, responsive layouts, accessible dialogs, and the original catalog imagery.
+## Security & OWASP Coverage
 
-The **Protection is on** panel presents each server-reported control as an even modular card. Its live activity screen is limited to the current browser session: it records periodic status checks plus browser connectivity and visibility changes, retains only the latest 12 entries in memory, and never exposes protected diagnostic data.
-
-The sign-in panel verifies the existing protected API only over HTTPS. It refuses to send credentials from an HTTP local preview, clears the password field after a check, and never writes credentials to browser storage.
-
-## Security and OWASP coverage
-
-Security controls are enforced at the server boundary for every connection; hidden interface elements or URL obscurity are never used as access control. The implementation covers the repository's `security/` and `security/owasp/` guidance with:
-
-- HTTPS with HTTP-to-HTTPS redirects in normal deployments, TLS 1.2 minimums, a restrictive Content Security Policy, Helmet headers, and no browser-delivered secrets.
-- `__Host-` secure, HttpOnly, SameSite session and CSRF cookies; bcrypt password verification; authenticated diagnostics; protected metrics; and endpoint-specific abuse limits.
-- Allow-listed catalog inputs, rejected duplicate query parameters, bounded request bodies, `text/plain`-only streamed uploads, opaque server errors, no-store responses for sensitive endpoints, and UUID-based server-side file names.
-- Request IDs, bounded diagnostic events, authentication failure logging without credentials, health checks, graceful shutdown, and dependency auditing through `npm run audit`.
-
-The checked-in OWASP notes are implementation guidance, not a compliance certification. Before a public production deployment, use managed TLS and secrets, a durable session/rate-limit store, a real identity provider and product datastore, centralized monitoring, and routine dependency remediation.
+Security controls are enforced at the server boundary:
+- HTTPS with HTTP-to-HTTPS redirects, TLS 1.2 minimums, and Helmet headers.
+- `__Host-` secure, HttpOnly, SameSite session and CSRF cookies; bcrypt password verification; and authenticated diagnostics.
+- Allow-listed catalog inputs, rejected duplicate query parameters, bounded request bodies, and secure request tracing.
 
 ## Prerequisites
 

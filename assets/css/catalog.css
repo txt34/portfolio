@@ -150,7 +150,19 @@ h1 em, .manifesto-copy em { color: var(--accent); font-family: var(--serif); fon
 .hero-card-front span { font-size: .65rem; letter-spacing: .15em; }
 .hero-card-front strong { font-family: var(--serif); font-size: 2.4rem; line-height: 1; font-weight: 500; }
 .hero-note { position: absolute; right: 0; bottom: 16%; color: var(--muted); font-size: .7rem; letter-spacing: .16em; writing-mode: vertical-rl; }
-.protection-feed { width: min(1240px, calc(100% - 3rem)); margin: 2rem auto; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--line); border-radius: 1.5rem; background: linear-gradient(135deg, rgb(255 255 255 / 96%), #edf5fb 62%, #e8f5ed); box-shadow: 0 16px 42px rgb(69 102 88 / 8%); }
+.ai-metrics-hud-card { margin-top: 1.5rem; padding: 1.5rem; border: 1px solid #1e40af; border-radius: 1rem; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); box-shadow: 0 10px 30px rgba(30, 64, 175, 0.12); }
+.ai-hud-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; }
+.ai-hud-header h3 { margin: 0; font-size: 1.25rem; color: #1e3a8a; }
+.ai-hud-badges { display: flex; gap: .6rem; flex-wrap: wrap; }
+.ai-badge { font-family: var(--mono); font-size: .7rem; font-weight: 700; padding: .25rem .65rem; border-radius: 999px; background: #1e3a8a; color: #fff; box-shadow: 0 2px 6px rgba(30, 58, 138, 0.2); }
+.ai-badge.weather { background: #0284c7; }
+.ai-badge.time { background: #0d9488; }
+.ai-badge.sync { background: #7c3aed; }
+.ai-stats-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 900px) { .ai-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.ai-stat-box { padding: 1rem; background: #fff; border: 1px solid #bfdbfe; border-radius: .75rem; display: flex; flex-direction: column; gap: .25rem; }
+.ai-stat-box span { font-family: var(--mono); font-size: .63rem; text-transform: uppercase; color: #475569; letter-spacing: .06em; }
+.ai-stat-box strong { font-family: var(--serif); font-size: 1.25rem; color: #1d4ed8; }
 .protection-feed h2 { margin-bottom: 0; font-size: clamp(1.6rem, 3vw, 2.4rem); }
 .revenue-dashboard-card { margin-top: 1.5rem; padding: 1.5rem; border: 1px solid #137333; border-radius: 1rem; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); box-shadow: 0 10px 30px rgba(19, 115, 51, 0.12); }
 .revenue-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }

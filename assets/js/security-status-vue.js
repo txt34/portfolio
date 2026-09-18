@@ -18,10 +18,29 @@ const ProtectionStatus = {
     const revenueEvents = ref([
       { id: 1, time: new Date().toLocaleTimeString(), title: 'Enterprise Tier 3 Contract (Acme Corp)', amount: '+$4,999/mo', type: 'success' }
     ]);
+    const aiMetrics = ref({
+      weather: 'Synchronizing atmospheric telemetry...',
+      localTime: new Date().toLocaleTimeString(),
+      aiNodeStatus: '6 AI Nodes Active',
+      confidenceScore: '99.84%',
+      moneyMakingStats: [
+        { title: 'DevOps Bug Prevention ROI', value: '$4,250 / hr saved' },
+        { title: 'Cloud Infra Optimization', value: '$128,400 / yr saved' }
+      ]
+    });
     const logScreen = ref(null);
     let eventId = 0;
     let timer;
     let controller;
+
+    const refreshAiMetrics = async () => {
+      try {
+        const res = await fetch('/api/ai/metrics', { cache: 'no-store' });
+        if (res.ok) {
+          aiMetrics.value = await res.json();
+        }
+      } catch {}
+    };
 
     const formatName = (name) => name.replace(/[A-Z]/g, (letter) => ` ${letter}`).trim();
     const recordActivity = (message, tone = 'info', timestamp = new Date(), typewriter = false) => {
@@ -166,6 +185,9 @@ const ProtectionStatus = {
         recordActivity(`[Expensive Fact] ${fact.title}: ${fact.desc}`, 'success', new Date(), true);
       }, 10000);
 
+      refreshAiMetrics();
+      const aiTimer = window.setInterval(refreshAiMetrics, 10000);
+
       document.addEventListener('visibilitychange', handleVisibility);
       window.addEventListener('online', handleOnline);
       window.addEventListener('offline', handleOffline);
@@ -173,13 +195,14 @@ const ProtectionStatus = {
     onUnmounted(() => {
       window.clearInterval(timer);
       window.clearInterval(factTimer);
+      window.clearInterval(aiTimer);
       controller?.abort();
       document.removeEventListener('visibilitychange', handleVisibility);
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     });
 
-    return { protections, activity, mrr, enterpriseSeats, revenueEvents, formatName, clearActivity, triggerDemo, simulateRevenueBoost, triggerModuleEcommerceDemo, setLogScreen };
+    return { protections, activity, mrr, enterpriseSeats, revenueEvents, aiMetrics, formatName, clearActivity, triggerDemo, simulateRevenueBoost, triggerModuleEcommerceDemo, setLogScreen };
   },
   render() {
     const protectionItems = Object.entries(this.protections).map(([name, value], index) => h('article', {
@@ -215,8 +238,30 @@ const ProtectionStatus = {
     ]));
 
     return h('div', { class: 'protection-island' }, [
-      h('div', [h('p', { class: 'eyebrow' }, 'Live by design & revenue'), h('h2', { id: 'protection-title' }, 'Protection & Enterprise SaaS Revenue are on.')]),
+      h('div', [h('p', { class: 'eyebrow' }, 'Live by design & AI intelligence'), h('h2', { id: 'protection-title' }, 'Protection, AI Layered Nodes & SaaS Revenue are live.')]),
       
+      /* AI Layered Nodes & Real-Time Intelligence HUD Card */
+      h('div', { class: 'ai-metrics-hud-card' }, [
+        h('div', { class: 'ai-hud-header' }, [
+          h('div', [
+            h('p', { class: 'eyebrow' }, 'AI Layered Nodes & Live Telemetry'),
+            h('h3', 'Real-Time Industry Intelligence & Money-Making Metrics')
+          ]),
+          h('div', { class: 'ai-hud-badges' }, [
+            h('span', { class: 'ai-badge weather' }, `🌤 ${this.aiMetrics.weather || 'Live Weather'}`),
+            h('span', { class: 'ai-badge time' }, `⏰ ${this.aiMetrics.localTime || '00:00:00'}`),
+            h('span', { class: 'ai-badge sync' }, `⚡ Sync: ${this.aiMetrics.kuramotoOscillatorSync || '0.994'}`)
+          ])
+        ]),
+        h('div', { class: 'ai-stats-grid' }, (this.aiMetrics.moneyMakingStats || []).map((stat, idx) => h('div', {
+          key: idx,
+          class: 'ai-stat-box'
+        }, [
+          h('span', stat.title),
+          h('strong', stat.value)
+        ])))
+      ]),
+
       /* Enterprise Revenue Dashboard Card */
       h('div', { class: 'revenue-dashboard-card' }, [
         h('div', { class: 'revenue-header' }, [

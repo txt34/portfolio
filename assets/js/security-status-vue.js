@@ -188,6 +188,20 @@ const ProtectionStatus = {
       refreshAiMetrics();
       const aiTimer = window.setInterval(refreshAiMetrics, 10000);
 
+      let lastTelemetryLog = '';
+      const llmTimer = window.setInterval(async () => {
+        try {
+          const res = await fetch('/api/llm/telemetry', { cache: 'no-store' });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.activeReasoning && data.activeReasoning !== lastTelemetryLog) {
+              lastTelemetryLog = data.activeReasoning;
+              recordActivity(`[LLM Telemetry] ${data.activeReasoning} (Throughput: ${data.tokenRate}, Latency: ${data.inferenceLatency})`, 'session', new Date(), true);
+            }
+          }
+        } catch {}
+      }, 1000);
+
       document.addEventListener('visibilitychange', handleVisibility);
       window.addEventListener('online', handleOnline);
       window.addEventListener('offline', handleOffline);
@@ -196,6 +210,7 @@ const ProtectionStatus = {
       window.clearInterval(timer);
       window.clearInterval(factTimer);
       window.clearInterval(aiTimer);
+      window.clearInterval(llmTimer);
       controller?.abort();
       document.removeEventListener('visibilitychange', handleVisibility);
       window.removeEventListener('online', handleOnline);

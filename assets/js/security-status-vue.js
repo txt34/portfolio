@@ -145,14 +145,24 @@ const ProtectionStatus = {
         { title: 'NCAA Division I Discipline & Scale', desc: 'Engineered high-concurrency Node.js Express server upholding strict production security boundaries under heavy traffic loads.' },
         { title: 'BGSU Computer Science Foundations', desc: 'Rigorous algorithmic implementation of data structures, graph traversal, and memory-safe systems programming over 150+ credit hours.' }
       ];
-      let lastFactIndex = -1;
+      const getNextFact = () => {
+        let storedQueue;
+        try {
+          storedQueue = JSON.parse(window.sessionStorage.getItem('cg_fact_queue') || '[]');
+        } catch {
+          storedQueue = [];
+        }
+        if (!Array.isArray(storedQueue) || storedQueue.length === 0) {
+          storedQueue = [...expensiveFacts].sort(() => Math.random() - 0.5);
+        }
+        const fact = storedQueue.pop();
+        try {
+          window.sessionStorage.setItem('cg_fact_queue', JSON.stringify(storedQueue));
+        } catch {}
+        return fact;
+      };
       const factTimer = window.setInterval(() => {
-        let randomIndex;
-        do {
-          randomIndex = Math.floor(Math.random() * expensiveFacts.length);
-        } while (randomIndex === lastFactIndex && expensiveFacts.length > 1);
-        lastFactIndex = randomIndex;
-        const fact = expensiveFacts[randomIndex];
+        const fact = getNextFact();
         recordActivity(`[Expensive Fact] ${fact.title}: ${fact.desc}`, 'success', new Date(), true);
       }, 10000);
 

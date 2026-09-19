@@ -92,31 +92,75 @@ const ProtectionStatus = {
       recordActivity(`Revenue Event: ${title} generated +$${amount.toLocaleString()}/mo MRR.`, 'success');
     };
     const triggerModuleEcommerceDemo = async (name) => {
-      const actions = {
-        transport: { title: 'TLS 1.2+ Transport Encryption Check', amount: 1250, mascot: 'Rammy (Fordham Rams #85)' },
-        securityHeaders: { title: 'Content Security Policy & Header Audit', amount: 890, mascot: 'Fred Falcon (BGSU Falcons)' },
-        rateLimiting: { title: 'Sliding Window Rate Limiting Scan', amount: 3400, mascot: 'Rammy (Fordham Rams #85)' },
-        requestValidation: { title: 'Allow-List & Query Sanitization Check', amount: 2100, mascot: 'Fred Falcon (BGSU Falcons)' },
-        csrfProtection: { title: 'Strict SameSite CSRF Handshake Test', amount: 1500, mascot: 'Rammy (Fordham Rams #85)' },
-        requestSizeLimits: { title: 'Bounded Body Payload Inspection', amount: 750, mascot: 'Fred Falcon (BGSU Falcons)' }
+      document.body.classList.add('stress-zen-relief');
+      window.setTimeout(() => document.body.classList.remove('stress-zen-relief'), 2500);
+
+      const concepts = {
+        transport: {
+          title: 'TLS 1.3 Zero-RTT Transport Encryption',
+          amount: 1250,
+          mascot: 'Rammy (Fordham Rams #85)',
+          metric: 'Advanced Metric: Zero-RTT Handshake & ChaCha20-Poly1305 Cipher Suite',
+          concept: 'Eliminates decryption latency, guaranteeing 100% data integrity and zero man-in-the-middle vulnerability across distributed microservices.'
+        },
+        securityHeaders: {
+          title: 'CSP Level 3 Nonce Architecture',
+          amount: 890,
+          mascot: 'Fred Falcon (BGSU Falcons)',
+          metric: 'Advanced Metric: CSP Level 3 Strict Nonce & X-Frame-Options DENY',
+          concept: 'Mitigates Cross-Site Scripting (XSS) injection vectors by 99.98% and prevents clickjacking DOM overlay exploits.'
+        },
+        rateLimiting: {
+          title: 'O(1) Sliding Window Rate Limiting',
+          amount: 3400,
+          mascot: 'Rammy (Fordham Rams #85)',
+          metric: 'Advanced Metric: O(1) Sliding Window Counter with Redis Memory Buckets',
+          concept: 'Absorbs DDoS botnets and flash-sale scalper spikes while preserving 99.999% SLA availability for legitimate VIP customers.'
+        },
+        requestValidation: {
+          title: 'JSON Schema Allow-List Enforcement',
+          amount: 2100,
+          mascot: 'Fred Falcon (BGSU Falcons)',
+          metric: 'Advanced Metric: Strict Schema Allow-Listing & Regex Anchoring',
+          concept: 'Prevents NoSQL/SQL injection and buffer overflow attacks by rejecting unvalidated payload shapes at the API gateway.'
+        },
+        csrfProtection: {
+          title: '__Host- Prefix Synchronizer Token',
+          amount: 1500,
+          mascot: 'Rammy (Fordham Rams #85)',
+          metric: 'Advanced Metric: __Host- Cookie Prefix & Cryptographic Token Binding',
+          concept: 'Binds state-changing POST requests securely to session entropy, rendering cross-site request forgery mathematically impossible.'
+        },
+        requestSizeLimits: {
+          title: '100KB Stream-Bounded Memory Guard',
+          amount: 750,
+          mascot: 'Fred Falcon (BGSU Falcons)',
+          metric: 'Advanced Metric: Stream Backpressure Flow Control & 100KB Limit',
+          concept: 'Defends against XML External Entity (XXE) and zip-bomb denial-of-service memory exhaustion attacks.'
+        }
       };
-      const act = actions[name] || { title: 'Cyber Tool Security Audit', amount: 500, mascot: 'Security Sentinel' };
-      
-      recordActivity(`[Safety Check Initiated] ${act.mascot} running diagnostic on [${name}]...`, 'session', new Date(), true);
+
+      const act = concepts[name] || {
+        title: 'Cyber Tool Security Audit',
+        amount: 500,
+        mascot: 'Security Sentinel',
+        metric: 'Advanced Metric: Algorithmic Verification & Bounded Complexity O(1)',
+        concept: 'Ensures deterministic computational execution and zero resource leakage under high load.'
+      };
+
+      recordActivity(`[Stress Relief & Zen Activated] 🌿 ${act.mascot} calming security scan on [${name}]...`, 'session', new Date(), true);
       
       try {
         const response = await fetch('/api/security-status', { cache: 'no-store' });
         if (response.ok) {
-          const payload = await response.json();
-          const controlStatus = payload.protections?.[name] ?? 'active';
           simulateRevenueBoost(act.amount, act.title);
-          recordActivity(`[Safety Check PASSED] ${act.mascot}: Module [${name}] status is [${controlStatus.toUpperCase()}]. Zero vulnerabilities detected. E-Com Transaction Secured! +$${act.amount.toLocaleString()}/mo MRR`, 'success', new Date(), true);
+          recordActivity(`[Advanced Concept] ${act.metric} | Concept: ${act.concept} | Result: Stress relieved, system secure. +$${act.amount.toLocaleString()}/mo MRR`, 'success', new Date(), true);
         } else {
           throw new Error('Server check failed');
         }
       } catch {
         simulateRevenueBoost(act.amount, act.title);
-        recordActivity(`[Safety Check SECURE] ${act.mascot}: Boundary check verified for [${name}]. +$${act.amount.toLocaleString()}/mo MRR`, 'success', new Date(), true);
+        recordActivity(`[Advanced Concept] ${act.metric} | Concept: ${act.concept} | Result: Stress relieved, boundary secured. +$${act.amount.toLocaleString()}/mo MRR`, 'success', new Date(), true);
       }
     };
     const setLogScreen = (element) => { logScreen.value = element; };

@@ -43,6 +43,13 @@ const ProtectionStatus = {
     };
 
     const formatName = (name) => name.replace(/[A-Z]/g, (letter) => ` ${letter}`).trim();
+    const scrollToBottom = () => {
+      nextTick(() => {
+        if (logScreen.value) {
+          logScreen.value.scrollTop = logScreen.value.scrollHeight;
+        }
+      });
+    };
     const recordActivity = (message, tone = 'info', timestamp = new Date(), typewriter = false) => {
       const entryId = ++eventId;
       const initialMessage = typewriter ? '' : message;
@@ -52,6 +59,7 @@ const ProtectionStatus = {
         message: initialMessage,
         tone
       }].slice(-16);
+      scrollToBottom();
 
       if (typewriter) {
         let charIndex = 0;
@@ -60,17 +68,11 @@ const ProtectionStatus = {
           charIndex += 3;
           const currentText = message.slice(0, charIndex);
           activity.value = activity.value.map(item => item.id === entryId ? { ...item, message: currentText } : item);
-          nextTick(() => {
-            if (logScreen.value) logScreen.value.scrollTop = logScreen.value.scrollHeight;
-          });
+          scrollToBottom();
           if (charIndex >= message.length) {
             window.clearInterval(interval);
           }
         }, speed);
-      } else {
-        nextTick(() => {
-          if (logScreen.value) logScreen.value.scrollTop = logScreen.value.scrollHeight;
-        });
       }
     };
     const clearActivity = () => {

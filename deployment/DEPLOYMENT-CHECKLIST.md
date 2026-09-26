@@ -16,5 +16,5 @@
 - [ ] Request and header timeouts are configured for the deployment proxy
 - [ ] Diagnostic stream subscriber capacity and shutdown behavior are verified
 - [ ] Shared Redis-backed session and rate-limit stores configured for multiple replicas
-- [ ] Load balancer readiness checks `/healthz` before sending traffic
+- [ ] Load balancer readiness checks `/health` before sending traffic
 - [ ] Product media served through approved object storage/CDN origins

@@ -54,12 +54,12 @@ test('production security boundaries hold at the HTTP API', async (t) => {
   assert.equal(root.status, 200);
   assert.match(root.headers.get('x-request-id') ?? '', /^[0-9a-f-]{36}$/);
 
-  const health = await fetch(`http://127.0.0.1:${port}/healthz`);
+  const health = await fetch(`http://127.0.0.1:${port}/health`);
   assert.equal(health.status, 200);
   assert.deepEqual((await health.json()).status, 'ok');
 
   const statusPolls = await Promise.all(Array.from({ length: 55 }, () => Promise.all([
-    fetch(`http://127.0.0.1:${port}/healthz`),
+    fetch(`http://127.0.0.1:${port}/health`),
     fetch(`http://127.0.0.1:${port}/api/security-status`)
   ])));
   assert.equal(statusPolls.flat().every((response) => response.status === 200), true);

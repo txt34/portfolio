@@ -136,7 +136,7 @@ app.use(helmet({
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
-  skip: (req) => req.path === '/healthz'
+  skip: (req) => req.path === '/health'
     || req.path === '/api/security-status'
     || req.path === '/api/ai/metrics'
     || req.path === '/api/llm/telemetry'
@@ -179,7 +179,7 @@ app.get('/metrics', async (req, res) => {
   if (!metricsToken || req.get('authorization') !== `Bearer ${metricsToken}`) return res.status(404).end();
   res.set('Cache-Control', 'no-store').type(registry.contentType).send(await registry.metrics());
 });
-app.get('/healthz', (_req, res) => {
+app.get('/health', (_req, res) => {
   res.status(serverReady && !shuttingDown ? 200 : 503).json({
     status: serverReady && !shuttingDown ? 'ok' : 'starting',
     serverTime: new Date().toISOString()

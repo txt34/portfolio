@@ -29,6 +29,12 @@ const ProtectionStatus = {
       ]
     });
     const logScreen = ref(null);
+    const revenueStats = ref({
+      transactions: '$1,425,800',
+      mitigations: '14,892',
+      uptime: '99.999%',
+      latency: '1.2ms'
+    });
     let eventId = 0;
     let timer;
     let controller;
@@ -376,6 +382,19 @@ const ProtectionStatus = {
       ]),
 
       h('div', { class: 'protection-items' }, protectionItems),
+      h('div', { class: 'revenue-board' }, [
+        h('div', { class: 'revenue-board-header' }, [
+          h('span', { class: 'revenue-dot' }),
+          h('strong', 'SECURE REVENUE & OPS BOARD'),
+          h('span', { class: 'revenue-badge' }, 'ZERO-LAG ACTIVE')
+        ]),
+        h('div', { class: 'revenue-grid' }, [
+          h('div', { class: 'revenue-card' }, [h('span', 'Protected Volume'), h('strong', this.revenueStats.transactions)]),
+          h('div', { class: 'revenue-card' }, [h('span', 'Threats Blocked'), h('strong', this.revenueStats.mitigations)]),
+          h('div', { class: 'revenue-card' }, [h('span', 'System Uptime'), h('strong', this.revenueStats.uptime)]),
+          h('div', { class: 'revenue-card' }, [h('span', 'API Latency'), h('strong', this.revenueStats.latency)])
+        ])
+      ]),
       h('div', { class: 'protection-console' }, [
         h('div', { class: 'protection-console-heading' }, [
           h('div', [

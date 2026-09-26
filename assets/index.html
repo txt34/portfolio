@@ -134,6 +134,60 @@
       <!-- Reactive Security Feed dynamically rendered by security-status-vue.js -->
     </section>
 
+    <section class="mascot-arena" id="mascots" aria-labelledby="mascot-title">
+      <div class="mascot-header">
+        <p class="eyebrow">Astrological 3D Orbital Arena</p>
+        <h2 id="mascot-title">Fred Falcon & Rammy</h2>
+        <p>BGSU orange and Fordham maroon converging in a celestial 3D astrological rotation.</p>
+      </div>
+      <div class="canvas-3d-container" data-mascot-arena></div>
+      <div class="orbital-commercial-deck" aria-live="polite" data-commercial-deck>
+        <div class="commercial-header">
+          <span class="commercial-dot" aria-hidden="true"></span>
+          <strong>ORBITAL TELEMETRY COMMERCIAL DECK</strong>
+          <div class="commercial-controls">
+            <button type="button" data-commercial-prev aria-label="Previous slide">‹</button>
+            <button type="button" data-commercial-toggle aria-label="Pause / Play commercial">❚❚</button>
+            <button type="button" data-commercial-next aria-label="Next slide">›</button>
+          </div>
+        </div>
+        <div class="commercial-slides">
+          <div class="commercial-slide active" data-slide="0">
+            <span class="slide-number">FRAME 01 / 04</span>
+            <h3>Celestial Convergence</h3>
+            <p>BGSU orange and Fordham maroon rotating in harmony across inclined 3D astronomical planes.</p>
+          </div>
+          <div class="commercial-slide" data-slide="1">
+            <span class="slide-number">FRAME 02 / 04</span>
+            <h3>Parametric Orbit Equations</h3>
+            <p><span>x(t) = a·cos(ωt)</span> · Elliptic semi-major axis calculations driving precise trajectory alignment.</p>
+          </div>
+          <div class="commercial-slide" data-slide="2">
+            <span class="slide-number">FRAME 03 / 04</span>
+            <h3>Orbital Velocity & Momentum</h3>
+            <p><span>v = √(GM(2/r - 1/a))</span> · Sustaining constant angular momentum across variable gravitational curvature.</p>
+          </div>
+          <div class="commercial-slide" data-slide="3">
+            <span class="slide-number">FRAME 04 / 04</span>
+            <h3>Zero Replica Lag Architecture</h3>
+            <p>Distributed WebGL buffer synchronization ensuring absolute state consistency and zero delay.</p>
+          </div>
+        </div>
+        <div class="commercial-dots" aria-hidden="true">
+          <button type="button" class="dot active" data-dot="0"></button>
+          <button type="button" class="dot" data-dot="1"></button>
+          <button type="button" class="dot" data-dot="2"></button>
+          <button type="button" class="dot" data-dot="3"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="cursor-console" aria-labelledby="cursor-console-title">
+      <div class="cursor-console-heading"><p class="eyebrow">Local interaction log</p><h2 id="cursor-console-title">Your cursor, working quietly.</h2><p>We use interaction locally to keep the interface responsive. No cursor coordinates or movement history are sent to the server.</p></div>
+      <div class="cursor-console-live" role="status" aria-live="polite"><span class="cursor-pulse" data-cursor-pulse aria-hidden="true"></span><span class="cursor-tracker" data-cursor-tracker aria-hidden="true"></span><span class="cursor-float-feed" data-cursor-float-feed aria-hidden="true">local / live</span><strong data-cursor-state>Waiting for movement</strong><span data-cursor-benefit>Move through the catalog to see useful controls respond.</span><button class="cursor-log-clear" type="button" data-cursor-clear data-tooltip="Delete the local interaction log now">Clear local log</button></div>
+      <div class="cursor-log" role="log" aria-live="polite" aria-label="Recent local interaction benefits" data-cursor-log></div>
+    </section>
+
     <section class="camera-profile-section bgsu-alchemy-pattern news-col-12" id="about" aria-labelledby="profile-camera-title">
       <div class="camera-viewfinder-hud" aria-hidden="true">
         <div class="hud-top-left">

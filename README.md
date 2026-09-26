@@ -56,7 +56,7 @@ npm start
 ## Example requests
 
 - `GET /` — welcome response
-- `GET /healthz` — minimal public health response with no internal counters
+- `GET /health` — minimal public health response with no internal counters
 - `GET /api/csrf-token` — CSRF token for browser clients
 - `GET /api/example?name=Alice` — validation example
 - `GET /api/protected` — requires basic auth
@@ -96,7 +96,7 @@ NODE_ENV=development
 
 For production, use a managed identity provider or a durable user store, a persistent session store instead of the default in-memory store, managed TLS, centralized secrets, dependency scanning, and a process manager or container platform. The application intentionally fails closed when `SESSION_SECRET` or production TLS configuration is missing.
 
-For multi-instance or industrial deployment, add a Redis-backed session and rate-limit store through `REDIS_URL`, place replicas behind a load balancer, serve product media through object storage/CDN, and route logs and metrics to centralized observability. The application now reports readiness through `/healthz` and drains active HTTP connections and diagnostic subscribers during shutdown.
+For multi-instance or industrial deployment, add a Redis-backed session and rate-limit store through `REDIS_URL`, place replicas behind a load balancer, serve product media through object storage/CDN, and route logs and metrics to centralized observability. The application now reports readiness through `/health` and drains active HTTP connections and diagnostic subscribers during shutdown.
 
 The catalog API uses short-lived cache headers and the browser cancels stale searches. Production should place a CDN or shared cache in front of `/assets` and `/api/products`; the current in-process catalog is optimized for the prototype but is not a replacement for a database-backed product index at large scale.
 

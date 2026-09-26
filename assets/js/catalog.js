@@ -1,5 +1,9 @@
+import { initCelestialArena } from './celestial-arena-three.js';
+import { initCommercialDeck } from './commercial-deck.js';
+
 const state = {
   category: '',
+  page: 1,
   saved: new Set(JSON.parse(localStorage.getItem('common-ground-saved') || '[]')),
   products: []
 };
@@ -51,7 +55,7 @@ const loadSiteStatus = async () => {
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 3000);
   try {
-    const response = await fetch('/healthz', { cache: 'no-store', signal: controller.signal });
+    const response = await fetch('/health', { cache: 'no-store', signal: controller.signal });
     const payload = await response.json();
     siteStatuses.forEach((siteStatus) => {
       siteStatus.classList.toggle('offline', !response.ok || payload.status !== 'ok');
@@ -209,6 +213,7 @@ const renderCategories = (availableCategories) => {
     button.dataset.tooltip = `Filter products by ${categoryName}`;
     button.addEventListener('click', () => {
       state.category = categoryName === 'All' ? '' : categoryName;
+      state.page = 1;
       loadProducts();
     });
     categories.append(button);
@@ -218,7 +223,14 @@ const renderCategories = (availableCategories) => {
 const renderProducts = (productList) => {
   productGrid.replaceChildren();
   emptyState.hidden = productList.length !== 0;
-  productList.forEach((product) => {
+
+  const pageSize = 6;
+  const totalPages = Math.max(1, Math.ceil(productList.length / pageSize));
+  if (state.page > totalPages) state.page = 1;
+
+  const paginatedProducts = productList.slice((state.page - 1) * pageSize, state.page * pageSize);
+
+  paginatedProducts.forEach((product) => {
     const card = makeElement('article', 'product-card');
     const image = makeElement('div', 'product-image');
     const imageElement = document.createElement('img');
@@ -247,6 +259,40 @@ const renderProducts = (productList) => {
     card.append(image, info);
     productGrid.append(card);
   });
+
+  let paginationContainer = document.querySelector('[data-pagination]');
+  if (!paginationContainer) {
+    paginationContainer = makeElement('div', 'pagination-container');
+    paginationContainer.setAttribute('data-pagination', '');
+    productGrid.after(paginationContainer);
+  }
+  paginationContainer.replaceChildren();
+
+  if (productList.length > pageSize) {
+    const prevBtn = makeElement('button', 'pagination-btn', '← Previous');
+    prevBtn.type = 'button';
+    prevBtn.disabled = state.page === 1;
+    prevBtn.addEventListener('click', () => {
+      if (state.page > 1) {
+        state.page -= 1;
+        renderProducts(productList);
+      }
+    });
+
+    const info = makeElement('span', 'pagination-info', `Page ${state.page} of ${totalPages}`);
+
+    const nextBtn = makeElement('button', 'pagination-btn', 'Push after →');
+    nextBtn.type = 'button';
+    nextBtn.disabled = state.page >= totalPages;
+    nextBtn.addEventListener('click', () => {
+      if (state.page < totalPages) {
+        state.page += 1;
+        renderProducts(productList);
+      }
+    });
+
+    paginationContainer.append(prevBtn, info, nextBtn);
+  }
 };
 
 const loadProducts = async () => {
@@ -321,3 +367,5 @@ saveState();
 loadProducts();
 loadSiteStatus();
 window.setInterval(loadSiteStatus, 15000);
+initCelestialArena(document.querySelector('[data-mascot-arena]'));
+initCommercialDeck();

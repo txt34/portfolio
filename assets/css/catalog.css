@@ -17,6 +17,59 @@
   --serif: 'Lora', Georgia, serif;
   --sans: 'Manrope', system-ui, sans-serif;
   --mono: 'DM Mono', monospace;
+  --inst-charcoal: #171B1D;
+  --panel-graphite: #252C2F;
+  --blueprint-navy: #102B3A;
+  --drafting-blue: #28536B;
+  --technical-ivory: #E2DDCA;
+  --instrument-green: #90B58B;
+  --signal-amber: #D5A04D;
+  --warning-red: #C45F52;
+  --muted-steel: #88969A;
+}
+
+/* Retro Engineering Workstation Instrument Panel Styling */
+.instrument-panel {
+  border: 2px solid var(--drafting-blue);
+  border-radius: 0.75rem;
+  background: var(--panel-graphite);
+  color: var(--technical-ivory);
+  box-shadow: 0 12px 36px rgba(16, 43, 58, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem;
+}
+.instrument-panel::before {
+  content: attr(data-instrument-id);
+  position: absolute;
+  top: 0.35rem;
+  right: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--muted-steel);
+  opacity: 0.8;
+}
+.status-lamp {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  background: var(--instrument-green);
+  box-shadow: 0 0 10px var(--instrument-green);
+}
+.status-lamp.amber {
+  background: var(--signal-amber);
+  box-shadow: 0 0 10px var(--signal-amber);
+}
+.status-lamp.red {
+  background: var(--warning-red);
+  box-shadow: 0 0 10px var(--warning-red);
+}
+.mono-val {
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+  color: var(--technical-ivory);
 }
 html { scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
 *, *::before, *::after {

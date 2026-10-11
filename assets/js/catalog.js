@@ -445,12 +445,28 @@ const initLiveNewsBillboard = async () => {
   nextBtn?.addEventListener('click', () => showSlide(currentIndex + 1));
   setInterval(() => showSlide(currentIndex + 1), 6000);
 
-  // Fetch actual live news in real time from Hacker News API
+  // Fetch live weather telemetry and real-time news
+  let dynamicNews = [...fallbackNews];
+  try {
+    const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=40.7128&longitude=-74.0060&current_weather=true', { cache: 'no-store' });
+    if (weatherRes.ok) {
+      const weatherData = await weatherRes.json();
+      const cw = weatherData.current_weather;
+      if (cw) {
+        dynamicNews.unshift({
+          badge: 'LIVE WEATHER TELEMETRY',
+          title: `Temperature: ${cw.temperature}°C · Wind: ${cw.windspeed} km/h`,
+          text: `Real-Time Meteorological Station · Weather Code: ${cw.weathercode} · Coordinates: 40.7128° N, 74.0060° W · Atmospheric Conditions Nominal.`
+        });
+      }
+    }
+  } catch {}
+
   try {
     const response = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json', { cache: 'no-store' });
     if (response.ok) {
       const ids = await response.json();
-      const topIds = ids.slice(0, 5);
+      const topIds = ids.slice(0, 4);
       const livePromises = topIds.map(id => fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.json()));
       const items = await Promise.all(livePromises);
       
@@ -461,12 +477,14 @@ const initLiveNewsBillboard = async () => {
       }));
 
       if (liveNews.length > 0) {
-        renderSlides([...liveNews, ...fallbackNews]);
+        dynamicNews = [...liveNews, ...dynamicNews];
       }
     }
   } catch (err) {
     console.warn('Live news fetch fallback active:', err);
   }
+
+  renderSlides(dynamicNews);
 };
 
 initLiveNewsBillboard();

@@ -5,6 +5,7 @@ export function initPageTabs() {
   const discoverSec = document.getElementById('discover');
   const aboutSec = document.getElementById('about');
   const marqueeSec = document.getElementById('marquee');
+  const liveNewsSec = document.getElementById('live-news-section');
   const protectionSec = document.getElementById('protection-app');
   const collectionsSec = document.getElementById('collections');
   const mascotSec = document.getElementById('mascots');
@@ -12,13 +13,13 @@ export function initPageTabs() {
 
   const tabMap = {
     'tab-overview': [discoverSec, aboutSec],
-    'tab-feed': [marqueeSec],
+    'tab-feed': [marqueeSec, liveNewsSec],
     'tab-security': [protectionSec],
     'tab-projects': [collectionsSec],
     'tab-console': [consoleSec, mascotSec]
   };
 
-  const allSections = [discoverSec, aboutSec, marqueeSec, protectionSec, collectionsSec, mascotSec, consoleSec].filter(Boolean);
+  const allSections = [discoverSec, aboutSec, marqueeSec, liveNewsSec, protectionSec, collectionsSec, mascotSec, consoleSec].filter(Boolean);
 
   function activateTab(targetTab) {
     tabButtons.forEach(b => {

@@ -285,6 +285,19 @@ app.get('/robots.txt', (_req, res) => {
   res.type('text/plain').send('User-agent: *\nDisallow: /api/\nDisallow: /metrics\n');
 });
 
+app.get('/sitemap.xml', (_req, res) => {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://localhost:3443/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>`;
+  res.header('Content-Type', 'application/xml');
+  res.send(xml);
+});
+
 app.get('/.well-known/security.txt', (_req, res) => {
   res.type('text/plain').send('Contact: mailto:security@commonground.example\nExpires: 2027-09-15T00:00:00.000Z\nPreferred-Languages: en\n');
 });
@@ -304,7 +317,7 @@ app.get('/api/products', [
   standardHeaders: 'draft-7',
   legacyHeaders: false,
   message: { error: 'Catalog request limit reached. Try again shortly.' }
-}) as express.RequestHandler, (req, res) => {
+}) as express.RequestHandler, (req: express.Request, res: express.Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ error: 'Invalid catalog query' });
 
@@ -334,7 +347,7 @@ app.get('/api/products/:id', (req, res) => {
 
 app.get('/api/example',
   [query('name').optional().isString().trim().isLength({ max: 100 }).withMessage('Name must be at most 100 characters')],
-  async (req, res) => {
+  async (req: express.Request, res: express.Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ error: 'Invalid request' });
     try {

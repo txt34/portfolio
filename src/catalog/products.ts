@@ -13,18 +13,6 @@ export interface Product {
 
 export const products: Product[] = [
   {
-    id: 'webgl-vector-engine',
-    name: 'High-Res WebGL & Vector Engine',
-    maker: 'Devin Holmes',
-    category: 'Architecture',
-    price: 'Three.js / GSAP',
-    rating: 5.0,
-    badge: 'Graphics',
-    description: 'Engineered high-performance graphics architecture utilizing Three.js for 3D WebGL environments, PixiJS for 2D particle systems, and GSAP with Lottie for scalable SVG vector micro-animations.',
-    image: '/assets/images/products/studio-headphones.svg',
-    accent: '#fde047'
-  },
-  {
     id: 'aivana-ai',
     name: 'Aivana-1 AI Analysis Suite',
     maker: 'Devin Holmes',
@@ -33,7 +21,7 @@ export const products: Product[] = [
     rating: 5.0,
     badge: 'AI & UI',
     description: 'Developed AI response evaluation dashboard using Python and Streamlit with modular user interfacing, loading screens for offloading, and responsive layout design.',
-    image: '/assets/images/fred-falcon.svg',
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=85',
     accent: '#d7e7e2'
   },
   {
@@ -45,7 +33,7 @@ export const products: Product[] = [
     rating: 4.9,
     badge: 'Research',
     description: 'Analyzed the Apache POI Java repository (676,000+ lines of code), evaluating object-oriented maintainability, coupling, and architectural complexity.',
-    image: '/assets/images/products/field-notebook.svg',
+    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=85',
     accent: '#f0dfc6'
   },
   {
@@ -57,7 +45,7 @@ export const products: Product[] = [
     rating: 4.9,
     badge: 'Security',
     description: 'Award-winning web application featuring robust input sanitization, regex validations, and OWASP-aligned software security measures for safe user data handling.',
-    image: '/assets/images/products/trail-pack.svg',
+    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=85',
     accent: '#dce2d3'
   },
   {
@@ -69,7 +57,7 @@ export const products: Product[] = [
     rating: 4.9,
     badge: 'BGSU',
     description: 'Computer Science student with 150+ completed credit hours and minor in Science & Civilization. Focused on secure software engineering and algorithms.',
-    image: '/assets/images/bgsu-crest.svg',
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=85',
     accent: '#eadbd6'
   },
   {
@@ -81,7 +69,7 @@ export const products: Product[] = [
     rating: 4.8,
     badge: 'Fordham',
     description: 'NCAA Division I student-athlete playing football at Fordham University, cultivating exceptional time management, teamwork, discipline, and high performance under pressure.',
-    image: '/assets/images/fordham-ram.svg',
+    image: 'https://images.unsplash.com/photo-1517649763962-0c623266cf10?auto=format&fit=crop&w=1200&q=85',
     accent: '#d8ddea'
   },
   {
@@ -93,7 +81,7 @@ export const products: Product[] = [
     rating: 4.8,
     badge: 'Entrepreneur',
     description: 'Owner & operator delivering landscaping and athletic training services. Managed social media operations, client communications, and customer relationships.',
-    image: '/assets/images/products/ceramic-set.svg',
+    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=85',
     accent: '#e6ddd1'
   }
 ];

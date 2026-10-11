@@ -104,11 +104,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // 3. PixiJS 2D interactive renderer
   if (window.PIXI) {
-    console.log('PixiJS high-performance 2D renderer initialized.');
+    // PixiJS active
   }
 
   // 4. Lottie vector animation engine
   if (window.lottie) {
-    console.log('Lottie vector animation engine active.');
+    // Lottie active
   }
 });

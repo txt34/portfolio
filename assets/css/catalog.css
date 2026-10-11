@@ -680,7 +680,12 @@ h2 { margin-bottom: 0; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.08; l
 .tech-card p { font-size: .82rem; color: var(--muted); line-height: 1.6; margin-bottom: .75rem; }
 .tech-card p:last-child { margin-bottom: 0; }
 .tech-card p strong { color: var(--ink); }
-.cursor-console { width: min(1240px, calc(100% - 3rem)); margin: 2rem auto 4rem; padding: clamp(2rem, 5vw, 4rem); display: grid; grid-template-columns: 1.1fr .9fr 1.2fr; gap: 2rem; align-items: start; border: 1px solid var(--line); border-radius: 1.75rem; background: rgb(255 255 255 / 94%); box-shadow: 0 20px 55px rgb(69 102 88 / 8%); }
+.cursor-console { width: min(1240px, calc(100% - 3rem)); margin: 2rem auto 4rem; padding: clamp(2rem, 5vw, 4rem); display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1.5rem; align-items: start; border: 1px solid var(--line); border-radius: 1.75rem; background: rgb(255 255 255 / 94%); box-shadow: 0 20px 55px rgb(69 102 88 / 8%); }
+.console-links-panel { display: grid; align-content: center; gap: .75rem; padding: 1rem; border: 1px solid var(--ink); border-radius: .75rem; background: var(--surface); font-family: var(--mono); font-size: .72rem; }
+.console-links-header { display: flex; align-items: center; gap: .5rem; font-size: .65rem; color: var(--ink); }
+.console-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; }
+.console-link-btn { display: inline-flex; align-items: center; gap: .35rem; padding: .45rem .6rem; border: 1px solid var(--line); border-radius: .4rem; background: #fff; color: var(--ink); font-family: var(--mono); font-size: .64rem; text-decoration: none; transition: all .18s ease; }
+.console-link-btn:hover { border-color: var(--accent); background: var(--accent); color: #fff; transform: translateY(-1px); }
 .cursor-console-heading h2 { max-width: 370px; margin-bottom: 1rem; font-size: clamp(1.8rem, 3vw, 2.8rem); }
 .cursor-console-heading > p:last-child { max-width: 390px; color: var(--muted); font-size: .84rem; line-height: 1.65; }
 .cursor-console-live { position: relative; min-height: 130px; display: grid; align-content: center; gap: .45rem; padding: 1rem; overflow: hidden; border: 1px solid var(--ink); border-radius: .75rem; background: var(--surface); font-family: var(--mono); font-size: .72rem; }

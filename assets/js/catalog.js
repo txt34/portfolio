@@ -1,5 +1,6 @@
 import { initCelestialArena } from './celestial-arena-three.js';
 import { initCommercialDeck } from './commercial-deck.js';
+import { initPageTabs } from './page-tabs.js';
 
 const state = {
   category: '',
@@ -377,6 +378,7 @@ loadSiteStatus();
 window.setInterval(loadSiteStatus, 15000);
 initCelestialArena(document.querySelector('[data-mascot-arena]'));
 initCommercialDeck();
+initPageTabs();
 
 const initLiveNewsBillboard = async () => {
   const billboard = document.querySelector('[data-live-news-billboard]');

@@ -42,6 +42,13 @@ body { min-width: 320px; margin: 0; overflow-x: clip; background: var(--paper); 
     linear-gradient(225deg, rgba(255, 114, 0, 0.12) 0%, rgba(59, 20, 5, 0.22) 100%);
 }
 
+.page-tabs-bar { position: sticky; top: 72px; z-index: 39; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); box-shadow: 0 4px 15px rgba(0,0,0,0.03); padding: 0.65rem 1.5rem; }
+.page-tabs-container { width: min(1240px, 100%); margin: 0 auto; display: flex; gap: 0.75rem; overflow-x: auto; scrollbar-width: none; }
+.page-tabs-container::-webkit-scrollbar { display: none; }
+.page-tab-btn { padding: 0.5rem 1rem; border: 1px solid var(--line); border-radius: 2rem; background: var(--surface); color: var(--muted); font-family: var(--mono); font-size: 0.75rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: all 0.2s ease; }
+.page-tab-btn:hover { border-color: var(--accent); color: var(--accent-deep); background: #fff; }
+.page-tab-btn.active { border-color: var(--accent); background: var(--accent); color: #fff; box-shadow: 0 4px 12px rgba(255, 114, 0, 0.3); }
+
 /* Clean Full-Width Modular Rows Layout with 0.25in Panel Spacing */
 .newspaper-feed-grid {
   width: min(1240px, calc(100vw - 1rem));

@@ -43,15 +43,34 @@ export function initPageTabs() {
     try {
       window.sessionStorage.setItem('active_tab', targetTab);
     } catch {}
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a[href^="#"]');
+    if (!anchor) return;
+    const href = anchor.getAttribute('href');
+    if (!href || href === '#') return;
+
+    const targetEl = document.querySelector(href);
+    if (!targetEl) return;
+
+    for (const [tabKey, sections] of Object.entries(tabMap)) {
+      if (sections.includes(targetEl) || sections.some(s => s?.contains(targetEl))) {
+        e.preventDefault();
+        activateTab(tabKey);
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', href);
+        break;
+      }
+    }
+  });
 
   tabButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const targetTab = btn.getAttribute('data-tab-target');
       activateTab(targetTab);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
 
@@ -60,5 +79,18 @@ export function initPageTabs() {
     const stored = window.sessionStorage.getItem('active_tab');
     if (stored && tabMap[stored]) initialTab = stored;
   } catch {}
+
+  if (window.location.hash) {
+    const hashEl = document.querySelector(window.location.hash);
+    if (hashEl) {
+      for (const [tabKey, sections] of Object.entries(tabMap)) {
+        if (sections.includes(hashEl) || sections.some(s => s?.contains(hashEl))) {
+          initialTab = tabKey;
+          break;
+        }
+      }
+    }
+  }
+
   activateTab(initialTab);
 }

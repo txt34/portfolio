@@ -130,9 +130,9 @@ export function initCelestialArena(container) {
 
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
     renderer.setSize(width, height, true);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 4));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.6;
+    renderer.toneMappingExposure = 1.9;
 
     // Cinematic Lighting & Star Core Light
     const ambientLight = new THREE.AmbientLight(0x475569, 1.5);
@@ -150,8 +150,8 @@ export function initCelestialArena(container) {
     fordhamFireLight.position.set(-3, -2, 2);
     scene.add(fordhamFireLight);
 
-    // 5,000 Starfield Background filling all corners
-    const starCount = 5000;
+    // 8,000 Starfield Background filling all corners
+    const starCount = 8000;
     const starGeometry = new THREE.BufferGeometry();
     const starPositions = new Float32Array(starCount * 3);
     const starColors = new Float32Array(starCount * 3);
@@ -248,7 +248,7 @@ export function initCelestialArena(container) {
     scene.add(solarFlares);
 
     // Swirling Stardust Accretion Ring
-    const dustCount = 3500;
+    const dustCount = 5000;
     const dustGeo = new THREE.BufferGeometry();
     const dustPos = new Float32Array(dustCount * 3);
     const dustCols = new Float32Array(dustCount * 3);
@@ -445,6 +445,10 @@ export function initCelestialArena(container) {
       fordhamCometParticles.geometry.attributes.position.needsUpdate = true;
 
       starField.rotation.y = elapsedTime * 0.015;
+      stardustRing.rotation.y = elapsedTime * 0.25;
+      camera.position.x = Math.sin(elapsedTime * 0.05) * 0.35;
+      camera.position.y = -3.2 + Math.cos(elapsedTime * 0.08) * 0.2;
+      camera.lookAt(0, 0, 0);
 
       renderer.render(scene, camera);
     }
@@ -461,7 +465,7 @@ export function initCelestialArena(container) {
           camera.aspect = w / h;
           camera.updateProjectionMatrix();
           renderer.setSize(w, h, true);
-          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3));
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 4));
         }
       }
     });

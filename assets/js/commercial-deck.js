@@ -7,6 +7,7 @@ export function initCommercialDeck() {
   const prevBtn = deck.querySelector('[data-commercial-prev]');
   const nextBtn = deck.querySelector('[data-commercial-next]');
   const toggleBtn = deck.querySelector('[data-commercial-toggle]');
+  const render4kBtn = deck.querySelector('[data-render-4k]');
 
   if (slides.length === 0) return;
 
@@ -60,6 +61,17 @@ export function initCommercialDeck() {
         slideInterval = window.setInterval(nextSlide, 5000);
       } else {
         window.clearInterval(slideInterval);
+      }
+    });
+  }
+
+  if (render4kBtn) {
+    render4kBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (typeof window.renderCelestial4KFrame === 'function') {
+        window.renderCelestial4KFrame();
+      } else {
+        alert('4K celestial render engine is initializing...');
       }
     });
   }

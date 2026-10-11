@@ -470,6 +470,31 @@ export function initCelestialArena(container) {
       }
     });
     resizeObserver.observe(container);
+
+    window.renderCelestial4KFrame = () => {
+      const exportCanvas = document.createElement('canvas');
+      exportCanvas.width = 3840;
+      exportCanvas.height = 2160;
+      const exportRenderer = new THREE.WebGLRenderer({ canvas: exportCanvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+      exportRenderer.setSize(3840, 2160, false);
+      exportRenderer.setPixelRatio(1.0);
+      exportRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+      exportRenderer.toneMappingExposure = 1.9;
+
+      const exportCamera = new THREE.PerspectiveCamera(50, 3840 / 2160, 0.1, 1000);
+      exportCamera.position.copy(camera.position);
+      exportCamera.quaternion.copy(camera.quaternion);
+      exportCamera.updateProjectionMatrix();
+
+      exportRenderer.render(scene, exportCamera);
+      const dataUrl = exportCanvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = 'celestial-arena-4k-render.png';
+      link.href = dataUrl;
+      link.click();
+      exportRenderer.dispose();
+      return dataUrl;
+    };
   } catch (err) {
     console.warn('Celestial arena fallback active:', err);
   }

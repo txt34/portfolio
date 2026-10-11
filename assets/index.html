@@ -60,12 +60,11 @@
       <span>Common Ground</span>
     </a>
     <nav class="primary-nav" aria-label="Primary navigation">
-      <a class="active" href="#discover" data-tooltip="Jump to introduction">Discover</a>
-      <a href="#about" data-tooltip="Explore background, discipline & education">Profile</a>
-      <a href="#marquee" data-tooltip="Live marquee feed">Live Feed</a>
-      <a href="#protection-app" data-tooltip="Cybersecurity & defense console">Security</a>
-      <a href="#collections" data-tooltip="Browse technical projects & architectures">Projects</a>
-      <a href="#console" data-tooltip="Local interaction telemetry">Console</a>
+      <button type="button" class="primary-nav-tab active" data-tab-target="tab-overview">Overview</button>
+      <button type="button" class="primary-nav-tab" data-tab-target="tab-feed">Feed</button>
+      <button type="button" class="primary-nav-tab" data-tab-target="tab-security">Security</button>
+      <button type="button" class="primary-nav-tab" data-tab-target="tab-projects">Projects</button>
+      <button type="button" class="primary-nav-tab" data-tab-target="tab-console">Console</button>
     </nav>
     <div class="header-actions">
       <span class="site-status" data-site-status role="status" aria-live="polite">
@@ -81,16 +80,6 @@
       </button>
     </div>
   </header>
-
-  <nav class="page-tabs-bar" aria-label="Page views navigation">
-    <div class="page-tabs-container">
-      <button type="button" class="page-tab-btn active" data-tab-target="tab-overview">Discover & Profile</button>
-      <button type="button" class="page-tab-btn" data-tab-target="tab-feed">Live Feed</button>
-      <button type="button" class="page-tab-btn" data-tab-target="tab-security">Security</button>
-      <button type="button" class="page-tab-btn" data-tab-target="tab-projects">Projects</button>
-      <button type="button" class="page-tab-btn" data-tab-target="tab-console">Console & Arena</button>
-    </div>
-  </nav>
 
   <main id="main-content" class="newspaper-feed-grid">
     <section class="hero fordham-jesuit-pattern news-col-12" id="discover">
@@ -276,6 +265,16 @@
           <a class="console-link-btn" href="https://github.com/txt34/portfolio" target="_blank" rel="noopener noreferrer" data-tooltip="GitHub source code">⭐ GitHub</a>
           <a class="console-link-btn" href="/health" target="_blank" rel="noopener noreferrer" data-tooltip="Server health status">🩺 Health</a>
         </div>
+      </div>
+      <div class="byte-piece-widget" aria-label="Byte Piece Architecture Feature">
+        <div class="byte-piece-header">
+          <span class="byte-badge">BYTE PIECE FEATURE</span>
+          <strong data-byte-title>Zero-Copy Stream Duplexing</strong>
+          <button type="button" class="byte-refresh-btn" data-byte-next>Next Byte ⚡</button>
+        </div>
+        <pre class="byte-code-block"><code data-byte-code>const stream = fs.createReadStream(filePath);
+stream.pipe(res);</code></pre>
+        <span class="byte-desc" data-byte-desc>Bypasses userspace memory buffers to stream large assets at maximum hardware throughput.</span>
       </div>
     </section>
 

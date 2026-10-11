@@ -1,3 +1,34 @@
+export function initBytePieceFeature() {
+  const bytes = [
+    { title: 'Zero-Copy Stream Duplexing', code: 'const stream = fs.createReadStream(path);\nstream.pipe(res);', desc: 'Bypasses userspace memory buffers to stream large assets at maximum hardware throughput.' },
+    { title: 'Adaptive 12-Round Bcrypt', code: 'const hash = await bcrypt.hash(pass, 12);\nconst match = await bcrypt.compare(pass, hash);', desc: 'Enforces constant-time cryptographic verification against timing side-channel attacks.' },
+    { title: 'O(1) Sliding Window Rate Limit', code: 'if (store.hits[ip] > max) return res.status(429).send();', desc: 'Absorbs DDoS botnets while maintaining 99.999% SLA availability for VIP traffic.' },
+    { title: 'CSP Nonce Architecture', code: "res.setHeader('Content-Security-Policy', `script-src 'nonce-${nonce}'`);", desc: 'Nullifies XSS injection vectors by requiring cryptographic nonces for script execution.' }
+  ];
+
+  const titleEl = document.querySelector('[data-byte-title]');
+  const codeEl = document.querySelector('[data-byte-code]');
+  const descEl = document.querySelector('[data-byte-desc]');
+  const nextBtn = document.querySelector('[data-byte-next]');
+
+  if (!titleEl || !codeEl || !descEl || !nextBtn) return;
+
+  let idx = 0;
+  const renderByte = () => {
+    const b = bytes[idx];
+    titleEl.textContent = b.title;
+    codeEl.textContent = b.code;
+    descEl.textContent = b.desc;
+    idx = (idx + 1) % bytes.length;
+  };
+
+  renderByte();
+  nextBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    renderByte();
+  });
+}
+
 export function initPageTabs() {
   const tabButtons = document.querySelectorAll('[data-tab-target]');
   if (tabButtons.length === 0) return;
@@ -93,4 +124,5 @@ export function initPageTabs() {
   }
 
   activateTab(initialTab);
+  initBytePieceFeature();
 }

@@ -832,7 +832,7 @@ main > section:nth-child(5) { animation-delay: 1.3s; }
 .mascot-arena h2 { color: #fff; margin: .3rem 0 .5rem; }
 .mascot-arena p { color: #94a3b8; font-size: .9rem; max-width: 480px; margin-left: auto; margin-right: auto; }
 .canvas-3d-container { position: relative; width: 100%; max-width: 100%; height: clamp(420px, 50vw, 580px); min-height: 420px; margin: 2rem auto 0 auto; display: flex; justify-content: center; align-items: center; perspective: 1200px; transform-style: preserve-3d; overflow: hidden; border-radius: 1.25rem; }
-.celestial-webgl-canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; margin: auto; }
+.celestial-webgl-canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; margin: auto; image-rendering: -webkit-optimize-contrast; }
 .celestial-plane-3d { position: absolute; inset: 0; display: grid; place-items: center; transform-style: preserve-3d; transform: rotateX(55deg) rotateZ(-15deg); pointer-events: none; }
 .celestial-orbit { position: absolute; border-radius: 50%; border: 1px dashed rgba(255, 255, 255, 0.2); transform-style: preserve-3d; animation: celestial-spin 24s linear infinite; }
 .orbit-bgsu { width: 320px; height: 320px; border-color: rgba(255, 114, 0, 0.5); box-shadow: 0 0 25px rgba(255, 114, 0, 0.15); }

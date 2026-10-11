@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="400" height="400">
+  <defs>
+    <linearGradient id="leather" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6b3410"/>
+      <stop offset="50%" stop-color="#462106"/>
+      <stop offset="100%" stop-color="#281203"/>
+    </linearGradient>
+    <linearGradient id="stripe" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+  <!-- Football Body -->
+  <path d="M 30,100 Q 100,15 170,100 Q 100,185 30,100 Z" fill="url(#leather)" stroke="#ff7200" stroke-width="5" filter="url(#shadow)"/>
+  <!-- White Stripes at ends -->
+  <path d="M 48,76 Q 65,52 78,68" fill="none" stroke="url(#stripe)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 152,76 Q 135,52 122,68" fill="none" stroke="url(#stripe)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 48,124 Q 65,148 78,132" fill="none" stroke="url(#stripe)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 152,124 Q 135,148 122,132" fill="none" stroke="url(#stripe)" stroke-width="8" stroke-linecap="round"/>
+  <!-- Laces -->
+  <line x1="82" y1="100" x2="118" y2="100" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+  <line x1="91" y1="90" x2="91" y2="110" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  <line x1="100" y1="88" x2="100" y2="112" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  <line x1="109" y1="90" x2="109" y2="110" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  <!-- #85 Inscription -->
+  <text x="100" y="156" font-family="system-ui, sans-serif" font-weight="900" font-size="24" fill="#fde047" text-anchor="middle" filter="url(#shadow)">#85</text>
+</svg>

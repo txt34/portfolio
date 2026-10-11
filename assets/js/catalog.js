@@ -221,7 +221,6 @@ const renderCategories = (availableCategories) => {
 };
 
 const renderProducts = (productList) => {
-  productGrid.replaceChildren();
   emptyState.hidden = productList.length !== 0;
 
   const pageSize = 6;
@@ -229,6 +228,7 @@ const renderProducts = (productList) => {
   if (state.page > totalPages) state.page = 1;
 
   const paginatedProducts = productList.slice((state.page - 1) * pageSize, state.page * pageSize);
+  const gridFragment = document.createDocumentFragment();
 
   paginatedProducts.forEach((product) => {
     const card = makeElement('article', 'product-card');
@@ -257,8 +257,10 @@ const renderProducts = (productList) => {
     footer.append(makeElement('span', 'product-price', product.price), makeElement('span', '', `★ ${product.rating}`));
     info.append(name, footer);
     card.append(image, info);
-    productGrid.append(card);
+    gridFragment.append(card);
   });
+
+  productGrid.replaceChildren(gridFragment);
 
   let paginationContainer = document.querySelector('[data-pagination]');
   if (!paginationContainer) {
@@ -266,33 +268,38 @@ const renderProducts = (productList) => {
     paginationContainer.setAttribute('data-pagination', '');
     productGrid.after(paginationContainer);
   }
-  paginationContainer.replaceChildren();
 
+  const paginationFragment = document.createDocumentFragment();
   if (productList.length > pageSize) {
-    const prevBtn = makeElement('button', 'pagination-btn', '← Previous');
+    const prevBtn = makeElement('button', 'pagination-btn', '← Prev');
     prevBtn.type = 'button';
     prevBtn.disabled = state.page === 1;
-    prevBtn.addEventListener('click', () => {
+    prevBtn.addEventListener('click', (event) => {
+      event.preventDefault();
       if (state.page > 1) {
         state.page -= 1;
         renderProducts(productList);
+        productGrid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     });
 
-    const info = makeElement('span', 'pagination-info', `Page ${state.page} of ${totalPages}`);
+    const info = makeElement('span', 'pagination-info', `Page ${state.page} / ${totalPages}`);
 
-    const nextBtn = makeElement('button', 'pagination-btn', 'Push after →');
+    const nextBtn = makeElement('button', 'pagination-btn', 'Next →');
     nextBtn.type = 'button';
     nextBtn.disabled = state.page >= totalPages;
-    nextBtn.addEventListener('click', () => {
+    nextBtn.addEventListener('click', (event) => {
+      event.preventDefault();
       if (state.page < totalPages) {
         state.page += 1;
         renderProducts(productList);
+        productGrid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     });
 
-    paginationContainer.append(prevBtn, info, nextBtn);
+    paginationFragment.append(prevBtn, info, nextBtn);
   }
+  paginationContainer.replaceChildren(paginationFragment);
 };
 
 const loadProducts = async () => {
@@ -314,6 +321,7 @@ const loadProducts = async () => {
     window.clearTimeout(timeout);
     if (!catalogReadinessReported) {
       catalogReadinessReported = true;
+      window.__catalogReady = true;
       window.dispatchEvent(new CustomEvent('catalog:ready'));
     }
   }
@@ -369,3 +377,94 @@ loadSiteStatus();
 window.setInterval(loadSiteStatus, 15000);
 initCelestialArena(document.querySelector('[data-mascot-arena]'));
 initCommercialDeck();
+
+const initLiveNewsBillboard = async () => {
+  const billboard = document.querySelector('[data-live-news-billboard]');
+  if (!billboard) return;
+  const slidesContainer = billboard.querySelector('.news-billboard-slides');
+  const prevBtn = billboard.querySelector('[data-news-prev]');
+  const nextBtn = billboard.querySelector('[data-news-next]');
+  const counter = billboard.querySelector('[data-news-counter]');
+  const timeEl = billboard.querySelector('[data-news-time]');
+  let currentIndex = 0;
+  let slides = [];
+
+  if (timeEl) {
+    setInterval(() => {
+      timeEl.textContent = new Date().toUTCString().replace('GMT', 'UTC');
+    }, 1000);
+  }
+
+  const fallbackNews = [
+    { badge: 'ATHLETICS', title: '#85 Tight End', text: 'Cultivating elite time management, teamwork, and high performance under pressure on the NCAA Division I gridiron.' },
+    { badge: 'ACADEMIA', title: 'Computer Science \'26', text: '150+ completed credit hours focused on algorithms, secure coding standards, and distributed systems.' },
+    { badge: 'SECURITY', title: 'Zero-Trust Defense', text: 'Hardened Node.js & Express engine featuring TLS 1.3 encryption, strict CSP nonces, and sliding-window rate limiting.' },
+    { badge: 'INNOVATION', title: '3D Celestial Arena', text: 'Advanced Three.js WebGL simulation rendering synchronized astronomical orbital mechanics and real-time telemetry.' }
+  ];
+
+  const renderSlides = (newsItems) => {
+    slidesContainer.replaceChildren();
+    newsItems.forEach((item, i) => {
+      const slide = document.createElement('div');
+      slide.className = `news-slide${i === 0 ? ' active' : ''}`;
+      slide.setAttribute('data-news-index', String(i));
+      
+      const badge = document.createElement('span');
+      badge.className = 'news-badge';
+      badge.textContent = item.badge;
+
+      const h3 = document.createElement('h3');
+      h3.textContent = item.title;
+
+      const p = document.createElement('p');
+      p.textContent = item.text;
+
+      slide.append(badge, h3, p);
+      slidesContainer.append(slide);
+    });
+    slides = billboard.querySelectorAll('.news-slide');
+    if (counter) counter.textContent = `01 / 0${slides.length}`;
+  };
+
+  renderSlides(fallbackNews);
+
+  const showSlide = (index) => {
+    if (!slides.length) return;
+    currentIndex = (index + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === currentIndex);
+    });
+    if (counter) {
+      counter.textContent = `0${currentIndex + 1} / 0${slides.length}`;
+    }
+  };
+
+  prevBtn?.addEventListener('click', () => showSlide(currentIndex - 1));
+  nextBtn?.addEventListener('click', () => showSlide(currentIndex + 1));
+  setInterval(() => showSlide(currentIndex + 1), 6000);
+
+  // Fetch actual live news in real time from Hacker News API
+  try {
+    const response = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json', { cache: 'no-store' });
+    if (response.ok) {
+      const ids = await response.json();
+      const topIds = ids.slice(0, 5);
+      const livePromises = topIds.map(id => fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.json()));
+      const items = await Promise.all(livePromises);
+      
+      const liveNews = items.filter(Boolean).map((item, idx) => ({
+        badge: idx === 0 ? 'LIVE FEED · TECH WIRE' : 'LIVE WIRE',
+        title: item.title,
+        text: `Real-Time Feed · Score: ${item.score || 0} pts · Comments: ${item.descendants || 0} · Live REST API Stream.`
+      }));
+
+      if (liveNews.length > 0) {
+        renderSlides([...liveNews, ...fallbackNews]);
+      }
+    }
+  } catch (err) {
+    console.warn('Live news fetch fallback active:', err);
+  }
+};
+
+initLiveNewsBillboard();

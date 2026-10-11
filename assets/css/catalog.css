@@ -89,6 +89,7 @@ body { min-width: 320px; margin: 0; overflow-x: clip; background: var(--paper); 
   height: auto !important;
   transform: translateZ(0);
   will-change: transform;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 * { box-sizing: border-box; }
 a { color: inherit; text-decoration: none; }

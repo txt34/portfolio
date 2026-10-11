@@ -70,16 +70,24 @@ export function initPageTabs() {
 
     const activeSections = tabMap[targetTab] || allSections;
 
-    allSections.forEach(sec => {
-      if (activeSections.includes(sec)) {
-        sec.style.display = '';
-        sec.style.opacity = '1';
-        sec.style.visibility = 'visible';
-      } else {
-        sec.style.display = 'none';
-        sec.style.opacity = '0';
-        sec.style.visibility = 'hidden';
-      }
+    window.requestAnimationFrame(() => {
+      allSections.forEach(sec => {
+        if (activeSections.includes(sec)) {
+          sec.style.display = '';
+          sec.style.opacity = '1';
+          sec.style.visibility = 'visible';
+          sec.style.pointerEvents = 'auto';
+        } else {
+          sec.style.opacity = '0';
+          sec.style.visibility = 'hidden';
+          sec.style.pointerEvents = 'none';
+          window.setTimeout(() => {
+            if (sec.style.opacity === '0') {
+              sec.style.display = 'none';
+            }
+          }, 250);
+        }
+      });
     });
 
     try {

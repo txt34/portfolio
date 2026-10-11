@@ -1,45 +1,3 @@
-export function initBytePieceFeature() {
-  const bytes = [
-    { title: 'Zero-Copy Stream Duplexing', code: 'const stream = fs.createReadStream(path);\nstream.pipe(res);', desc: 'Bypasses userspace memory buffers to stream large assets at maximum hardware throughput.' },
-    { title: 'Adaptive 12-Round Bcrypt', code: 'const hash = await bcrypt.hash(pass, 12);\nconst match = await bcrypt.compare(pass, hash);', desc: 'Enforces constant-time cryptographic verification against timing side-channel attacks.' },
-    { title: 'O(1) Sliding Window Rate Limit', code: 'if (store.hits[ip] > max) return res.status(429).send();', desc: 'Absorbs DDoS botnets while maintaining 99.999% SLA availability for VIP traffic.' },
-    { title: 'CSP Nonce Architecture', code: "res.setHeader('Content-Security-Policy', `script-src 'nonce-${nonce}'`);", desc: 'Nullifies XSS injection vectors by requiring cryptographic nonces for script execution.' },
-    { title: 'Prometheus Histogram Latency', code: "const histogram = new promClient.Histogram({ name: 'http_duration_seconds', buckets: [0.01, 0.05, 0.1, 0.5, 1] });", desc: 'Tracks sub-millisecond API response distributions and p99 latency percentiles.' },
-    { title: '__Host- Session Cookie Binding', code: 'res.cookie("sessionId", token, { secure: true, httpOnly: true, sameSite: "strict" });', desc: 'Enforces hardened browser transport boundaries and prevents cross-site request forgery.' }
-  ];
-
-  const titleEl = document.querySelector('[data-byte-title]');
-  const codeEl = document.querySelector('[data-byte-code]');
-  const descEl = document.querySelector('[data-byte-desc]');
-  const nextBtn = document.querySelector('[data-byte-next]');
-
-  if (!titleEl || !codeEl || !descEl) return;
-
-  let idx = 0;
-  const renderByte = (index) => {
-    if (index !== undefined) idx = index % bytes.length;
-    const b = bytes[idx];
-    titleEl.textContent = b.title;
-    codeEl.textContent = b.code;
-    descEl.textContent = b.desc;
-    idx = (idx + 1) % bytes.length;
-  };
-
-  renderByte();
-  nextBtn?.addEventListener('click', (e) => {
-    e.preventDefault();
-    renderByte();
-  });
-
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('button, .product-card, .protection-item');
-    if (!btn || btn.closest('.byte-piece-widget')) return;
-    if (Math.random() < 0.5) {
-      renderByte();
-    }
-  });
-}
-
 export function initPageTabs() {
   const tabButtons = document.querySelectorAll('[data-tab-target]');
   if (tabButtons.length === 0) return;
@@ -143,5 +101,4 @@ export function initPageTabs() {
   }
 
   activateTab(initialTab);
-  initBytePieceFeature();
 }
